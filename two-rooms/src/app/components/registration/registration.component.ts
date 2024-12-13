@@ -15,6 +15,6 @@ export class RegistrationComponent {
     console.log(form.value)
   }
   onClick() {
-    this.router.navigate(["/registration"])
+    this.router.navigate(["/login"])
   }
 }
