@@ -1,0 +1,48 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
+    
+    & form {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+
+        & button {
+            align-self: center;
+            padding: 5px;
+
+            &:enabled {
+                color: var(--white);
+                background-color: var(--main2);
+                border: none;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+.login_field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & label {
+        flex: 1;
+    }
+
+    & input {
+        flex: 2;
+    }
+}
+
+.register {
+    border: none;
+    background: none;
+    color: var(--main1);
+
+    &:hover {
+        cursor: pointer;
+    }
+}
