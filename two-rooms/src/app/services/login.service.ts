@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Observable } from 'rxjs'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
   constructor(private http: HttpClient) {}
@@ -11,11 +11,10 @@ export class LoginService {
 
   getUsers(): Observable<object> {
     const headers = new HttpHeaders({
-      "First": "********",
-      "Second": "********"
+      First: '********',
+      Second: '********',
     })
 
-    return this.http.get(this.backUrl, {headers})
+    return this.http.get(this.backUrl, { headers })
   }
-
 }
