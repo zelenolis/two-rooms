@@ -1,29 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 
 :root {
-    --white: #FFFFFF;
-    --black: #000000;
-    --background: #293646;
-    --main1: #CA282C;
-    --main2: #E89C1E;
+  --white: #ffffff;
+  --black: #000000;
+  --background: #293646;
+  --main1: #ca282c;
+  --main2: #e89c1e;
 }
 
 @font-face {
-    font-family: head;
-    src: url('../public/Oswald-Medium.ttf');
+  font-family: head;
+  src: url('../public/Oswald-Medium.ttf');
 }
 
 @font-face {
-    font-family: body;
-    src: url('../public/SourceSans3-Medium.ttf');
+  font-family: body;
+  src: url('../public/SourceSans3-Medium.ttf');
 }
 
 html {
-    font-family: body;
-    background-color: var(--background);
-    color: var(--white);
+  font-family: body;
+  background-color: var(--background);
+  color: var(--white);
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }

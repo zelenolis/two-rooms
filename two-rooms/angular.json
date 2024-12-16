@@ -29,10 +29,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss",
-              "public/forms.scss"
-            ],
+            "styles": ["src/styles.scss", "public/forms.scss"],
             "scripts": []
           },
           "configurations": {
