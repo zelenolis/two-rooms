@@ -10,11 +10,6 @@ export class LoginService {
   private readonly backUrl = 'https://parseapi.back4app.com/classes/team'
 
   getUsers(): Observable<object> {
-    const headers = new HttpHeaders({
-      First: '********',
-      Second: '********',
-    })
-
-    return this.http.get(this.backUrl, { headers })
+    return this.http.get(this.backUrl)
   }
 }
