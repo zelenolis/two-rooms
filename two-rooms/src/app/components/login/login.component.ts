@@ -16,13 +16,10 @@ export class LoginComponent {
   hidden = true
 
   onSubmit(form: any) {
-    console.log(form.value)
     this.hidden = !this.hidden
-    /*
-    this.loginService.getUsers().subscribe((res) => {
-      console.log(res)
-    })
-      */
+    
+    this.loginService.loginChecks(form.value)
+
   }
   onClick() {
     this.router.navigate(['/registration'])
