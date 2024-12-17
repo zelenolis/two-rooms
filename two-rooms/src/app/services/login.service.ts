@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core'
 import { Observable, tap } from 'rxjs'
 import { GetHttpService } from './get-http.service'
 import { LoginCheckService } from './login-check.service'
-import { UserResponce } from '../interfaces/interfaces'
+import { LoginForm, UserResponce } from '../interfaces/interfaces'
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +17,9 @@ export class LoginService {
 
   private readonly url = 'https://parseapi.back4app.com/classes/team'
 
-  loginChecks(logindata: object) {
+  loginChecks(loginForm: LoginForm) {
     this.getHttpService.getRequest(this.url).subscribe((res: UserResponce) => {
-      this.loginCheckService.checkUser(logindata, res)
+      this.loginCheckService.checkUser(loginForm, res)
     })
   }
 
