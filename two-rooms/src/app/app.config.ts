@@ -1,7 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core'
+import { ApplicationConfig, isDevMode, provideZoneChangeDetection } from '@angular/core'
 import { provideRouter } from '@angular/router'
 import { provideAnimations } from "@angular/platform-browser/animations"
 import { provideStore } from "@ngrx/store"
+import { provideStoreDevtools } from "@ngrx/store-devtools"
 
 import { routes } from './app.routes'
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
@@ -14,6 +15,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimations(),
     provideStore({ books: bookReducer }),
+    provideStoreDevtools({
+      maxAge: 25,
+      logOnly: !isDevMode()
+    }),
     provideHttpClient(withInterceptors([requestsInterceptor])),
   ],
 }
