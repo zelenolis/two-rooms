@@ -44,12 +44,6 @@ export class LoginService {
       })
     )
     .subscribe()    
-
   }
 
-  //1. getUsers                   +
-  //2. check login with gets      +
-  //3. create localstorage token  +
-  //4. get store                  ...
-  //5. redirect to dashboard      ...
 }
