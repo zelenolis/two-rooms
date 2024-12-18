@@ -23,14 +23,9 @@ export class LoginService {
     })
   }
 
-  /*
-  getUsers(): Observable<object> {
-    return this.http.get(this.backUrl)
-  }
-    */
-  //1. getUsers
-  //2. check login with gets
-  //3. create localstorage token
-  //4. get store
-  //5. redirect to dashboard
+  //1. getUsers                   +
+  //2. check login with gets      +
+  //3. create localstorage token  ...
+  //4. get store                  ...
+  //5. redirect to dashboard      ...
 }
