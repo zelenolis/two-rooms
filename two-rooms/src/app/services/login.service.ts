@@ -4,6 +4,8 @@ import { GetHttpService } from './get-http.service'
 import { LoginCheckService } from './login-check.service'
 import { LoginForm, UserResponce } from '../interfaces/interfaces'
 import { Router } from '@angular/router'
+import { Store } from '@ngrx/store'
+import { addAllBooksAction } from '../store/actions'
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +15,7 @@ export class LoginService {
   private readonly getHttpService = inject(GetHttpService)
   private readonly loginCheckService = inject(LoginCheckService)
   private readonly router = inject(Router)
+  private readonly store = inject(Store)
 
   private readonly logUrl = 'https://parseapi.back4app.com/classes/team'
   private readonly storeUrl = 'https://parseapi.back4app.com/classes/booking'
@@ -32,7 +35,12 @@ export class LoginService {
       takeWhile(() => isLogged),
       switchMap(() => this.getHttpService.getRequest(this.storeUrl)),
       tap((data: UserResponce) => {
-        console.log(data)
+        const transformData = data.results.map(item => ({
+          team: item.team,
+          time: item.time
+        }))
+        this.store.dispatch(addAllBooksAction({newBooks: transformData}))
+        this.router.navigate([""])
       })
     )
     .subscribe()    
