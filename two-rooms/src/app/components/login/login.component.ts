@@ -17,7 +17,7 @@ export class LoginComponent {
 
   onSubmit(form: any) {
     this.hidden = !this.hidden
-    
+
     this.loginService.loginChecks(form.value)
 
   }
