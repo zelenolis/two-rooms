@@ -1,20 +1,24 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { LoginForm, UserResponce } from '../interfaces/interfaces';
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginCheckService {
-
-  constructor() { }
+  private readonly matSnackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
 
   checkUser(loginForm: LoginForm, users: UserResponce) {
-    for (let user of users.results) {
-      if (user.email === loginForm.email) {
-        console.log('check completed')
-      } else {
-        console.log('check doen\'t completed')
-      }
+    const userMatch = users.results.find(user => user.email === loginForm.email)
+    if (userMatch) {
+      localStorage.setItem("logged", userMatch.ID)
+      this.matSnackBar.open("logged succesfully", "OK", { duration: 3000 })
+      this.router.navigate([""])
+    } else {
+      this.matSnackBar.open("user not found", "OK", { duration: 3000 })
+      this.router.navigate(["/registration"])
     }
   }
 }
