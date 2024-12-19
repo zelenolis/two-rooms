@@ -20,6 +20,14 @@ export const routes: Routes = [
     canActivate: [isloggedGuard],
   },
   {
+    path: 'booking',
+    loadComponent: () =>
+      import('./components/book/book.component').then(
+        (mod) => mod.BookComponent,
+      ),
+    canActivate: [notloggedGuard],
+  },
+  {
     path: 'registration',
     loadComponent: () =>
       import('./components/registration/registration.component').then(
@@ -27,4 +35,12 @@ export const routes: Routes = [
       ),
     canActivate: [isloggedGuard],
   },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./components/login/login.component').then(
+        (mod) => mod.LoginComponent,
+      ),
+    canActivate: [isloggedGuard],
+  }
 ]
