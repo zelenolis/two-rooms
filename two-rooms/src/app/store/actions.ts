@@ -12,6 +12,6 @@ export const addBookAction = createAction(
 )
 
 export const addAllBooksAction = createAction(
-    StoreActionsType.addBook,
+    StoreActionsType.addAllBooks,
     props<{newBooks: Booking[]}>()
 )
