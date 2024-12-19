@@ -27,6 +27,9 @@ export class DashboardComponent implements OnInit {
     localStorage.clear()
     this.router.navigate(['/login'])
   }
+  onBooking() {
+    this.router.navigate(['/booking'])
+  }
 
   ngOnInit() {
     this.teamName = this.teamNameService.getName()

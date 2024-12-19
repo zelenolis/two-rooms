@@ -1,8 +1,11 @@
-<div class="main">
+<div class="header">
     <h2>Team {{teamName}}</h2>
-    <button class="main_logout" (click)="onLogout()">Log Out</button>
+    <button class="header_logout" (click)="onLogout()">Log Out</button>
 </div>
-<div>
+<div class="main">
+    <div>
+        <button (click)="onBooking()">Book new date</button>
+    </div>
     <div *ngIf="(bookedDates$ | async) as dates">
         <div *ngIf="dates.length; else elseBlock">
             <div *ngFor="let date of dates">
