@@ -1,0 +1,16 @@
+.wrapper {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+}
+
+/*
+.wrapper1{}
+.wrapper2{}
+.wrapper3{}
+*/
+
+.book_button{
+    border-radius: 5px;
+}

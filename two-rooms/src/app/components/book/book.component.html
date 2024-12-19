@@ -1,1 +1,26 @@
-<p>book works!</p>
+<h3>Booking</h3>
+<div class="wrapper">
+    <div class="wrapper1">
+        <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (ngModelChange)="dateChanged()">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+    </div>
+    <div class="wrapper2">
+        <mat-form-field>
+            <mat-label>Pick a time</mat-label>
+            <input matInput [matTimepicker]="picker1" [(ngModel)]="selectedTime" (ngModelChange)="dateChanged()">
+            <mat-timepicker-toggle matIconSuffix [for]="picker1"/>
+            <mat-timepicker #picker1/>
+          </mat-form-field>
+    </div>
+    <div class="wrapper3">
+        <p>{{selectedDate}}</p>
+        <p>{{selectedTime}}</p>
+    </div>
+</div>
+<button class="book_button">Check availability</button>
+<button class="book_button">Book It</button>

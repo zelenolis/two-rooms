@@ -8,6 +8,7 @@ import { routes } from './app.routes'
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import { requestsInterceptor } from './interceptors/requests.interceptor'
 import { bookReducer } from './store/reducer'
+import { provideNativeDateAdapter } from '@angular/material/core'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimations(),
     provideStore({ books: bookReducer }),
+    provideNativeDateAdapter(),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode()
