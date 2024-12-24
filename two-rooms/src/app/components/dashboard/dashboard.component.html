@@ -3,6 +3,38 @@
     <button class="header_logout" (click)="onLogout()">Log Out</button>
 </div>
 <div class="main">
+    <div *ngIf="(bookedDates$ | async) as dates">
+        <div *ngIf="dates.length; else elseBlock">
+            <mat-calendar 
+            [(selected)]="selected" 
+            [dateClass]="dateClass"
+            (selectedChange)="selectDate()"
+            ></mat-calendar>
+        </div>
+        <ng-template #elseBlock>
+            <mat-calendar></mat-calendar>
+        </ng-template>
+    </div>
+    <div *ngIf="showBooks">
+        <div *ngIf="(bookedDates$ | async) as dates">
+            <div *ngIf="dates.length">
+                <div *ngFor="let pickedDate of dates">
+                    <app-reservation [pickedDate]="pickedDate"></app-reservation>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <!--
+    <mat-card class="demo-inline-calendar-card">
+        <mat-calendar [(selected)]="selected" (selectedChange)="onSelectedDateChanged()" [dateClass]="dateClass"></mat-calendar>
+    </mat-card>
+    <p>Selected date: {{selected()}}</p>
+-->
+
+    <!--
     <div>
         <button (click)="onBooking()">Book new date</button>
     </div>
@@ -16,4 +48,5 @@
             <p>You don't have any reservations</p>
         </ng-template>
     </div>
+    -->
 </div>

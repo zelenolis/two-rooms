@@ -24,3 +24,9 @@
   align-items: flex-start;
   justify-content: space-between;
 }
+
+button.highlight {
+  color: var(--black);
+  background-color: var(--main2);
+  border-radius: 50%;
+}
