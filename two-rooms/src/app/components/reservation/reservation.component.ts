@@ -10,9 +10,10 @@ import { Booking } from '../../interfaces/interfaces';
 export class ReservationComponent {
 
   @Input()
-    date: Booking = {
+    pickedDate: Booking = {
       team: '',
-      time: ''
+      time: '',
+      date: '',
     }
 
 }
