@@ -37,7 +37,8 @@ export class LoginService {
       tap((data: UserResponce) => {
         const transformData = data.results.map(item => ({
           team: item.team,
-          time: item.time
+          time: item.time,
+          date: item.date
         }))
         this.store.dispatch(addAllBooksAction({newBooks: transformData}))
         this.router.navigate([""])
