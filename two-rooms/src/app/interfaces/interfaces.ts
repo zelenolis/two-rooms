@@ -4,7 +4,8 @@ export interface BookList {
 
 export interface Booking {
     team: string,
-    time: string
+    time: string,
+    date: string
 }
 
 export interface UserResponce {
