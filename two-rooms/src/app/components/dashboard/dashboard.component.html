@@ -24,29 +24,7 @@
             </div>
         </div>
     </div>
-    
-    
-
-    <!--
-    <mat-card class="demo-inline-calendar-card">
-        <mat-calendar [(selected)]="selected" (selectedChange)="onSelectedDateChanged()" [dateClass]="dateClass"></mat-calendar>
-    </mat-card>
-    <p>Selected date: {{selected()}}</p>
--->
-
-    <!--
-    <div>
-        <button (click)="onBooking()">Book new date</button>
-    </div>
-    <div *ngIf="(bookedDates$ | async) as dates">
-        <div *ngIf="dates.length; else elseBlock">
-            <div *ngFor="let date of dates">
-                <app-reservation [date]="date"></app-reservation>
-            </div>
-        </div>
-        <ng-template #elseBlock>
-            <p>You don't have any reservations</p>
-        </ng-template>
-    </div>
-    -->
+</div>
+<div>
+    <button (click)="onBooking()">Book new date</button>
 </div>
