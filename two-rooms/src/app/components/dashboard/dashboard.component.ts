@@ -8,11 +8,12 @@ import { ReservationComponent } from '../reservation/reservation.component'
 import {MatCardModule} from '@angular/material/card'
 import {MatCalendar, MatDatepickerModule} from '@angular/material/datepicker'
 import { map } from 'rxjs'
+import { SortByDatePipe } from '../../pipes/sort-by-date.pipe'
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatDatepickerModule, MatCardModule, CommonModule, ReservationComponent],
+  imports: [MatDatepickerModule, MatCardModule, CommonModule, ReservationComponent, SortByDatePipe],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -20,6 +21,8 @@ import { map } from 'rxjs'
 })
 export class DashboardComponent implements OnInit {
   selected = model<Date | null>(null)
+  
+  myDate: Date = new Date()
   showBooks = false
   
   private readonly router = inject(Router)
@@ -41,6 +44,7 @@ export class DashboardComponent implements OnInit {
     if (pick) {
       const date = new Date(pick)
       date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+      this.myDate = date
       const formatDate = date.toISOString()
       this.specialDates.some(val => val === formatDate) ?
       this.showBooks = true :

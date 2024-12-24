@@ -18,7 +18,7 @@
     <div *ngIf="showBooks">
         <div *ngIf="(bookedDates$ | async) as dates">
             <div *ngIf="dates.length">
-                <div *ngFor="let pickedDate of dates">
+                <div *ngFor="let pickedDate of dates | sortByDate: myDate">
                     <app-reservation [pickedDate]="pickedDate"></app-reservation>
                 </div>
             </div>
