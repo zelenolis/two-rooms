@@ -11,6 +11,14 @@ export interface Booking {
     room: string
 }
 
+export interface SendBooking {
+    team: string,
+    time: string,
+    date: string,
+    duration: string,
+    room: string
+}
+
 export interface UserResponce {
     results: any[]
 }
