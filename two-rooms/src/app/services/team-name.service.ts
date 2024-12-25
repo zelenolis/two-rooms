@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class TeamNameService {
 
-  private teamName = 'no team'
+  private teamName = 'team0'
   
   setName(name: string) {
     this.teamName = name
