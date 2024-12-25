@@ -19,7 +19,6 @@ export class LoginComponent {
     this.hidden = !this.hidden
 
     this.loginService.loginChecks(form.value)
-
   }
   onClick() {
     this.router.navigate(['/registration'])

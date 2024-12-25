@@ -1,15 +1,15 @@
 .wrapper {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
 }
 
-.book_button{
-    border-radius: 5px;
+.book_button {
+  border-radius: 5px;
 }
 
 .book_option {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }

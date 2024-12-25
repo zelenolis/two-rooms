@@ -42,5 +42,5 @@ export const routes: Routes = [
         (mod) => mod.LoginComponent,
       ),
     canActivate: [isloggedGuard],
-  }
+  },
 ]

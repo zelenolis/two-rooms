@@ -1,15 +1,20 @@
-import { ChangeDetectionStrategy, Component, inject, model, ViewEncapsulation } from '@angular/core'
-import {MatFormFieldModule} from '@angular/material/form-field'
-import {MatSelectModule} from '@angular/material/select'
-import {MatTimepickerModule} from '@angular/material/timepicker'
-import {MatInputModule} from '@angular/material/input'
-import {MatDatepickerModule} from '@angular/material/datepicker'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  model,
+  ViewEncapsulation,
+} from '@angular/core'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatSelectModule } from '@angular/material/select'
+import { MatTimepickerModule } from '@angular/material/timepicker'
+import { MatInputModule } from '@angular/material/input'
+import { MatDatepickerModule } from '@angular/material/datepicker'
 import { FormsModule } from '@angular/forms'
 import { MatCardModule } from '@angular/material/card'
 import { NgFor } from '@angular/common'
 import { BookThisService } from '../../services/book-this.service'
 import { Rooms, RepeatOptions } from '../../interfaces/interfaces'
-
 
 @Component({
   selector: 'app-book',
@@ -17,15 +22,16 @@ import { Rooms, RepeatOptions } from '../../interfaces/interfaces'
     NgFor,
     MatFormFieldModule,
     MatSelectModule,
-    MatCardModule, 
-    MatInputModule, 
-    MatDatepickerModule, 
-    FormsModule, 
-    MatTimepickerModule],
+    MatCardModule,
+    MatInputModule,
+    MatDatepickerModule,
+    FormsModule,
+    MatTimepickerModule,
+  ],
   templateUrl: './book.component.html',
   styleUrl: './book.component.scss',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookComponent {
   private readonly bookThisService = inject(BookThisService)
@@ -52,7 +58,15 @@ export class BookComponent {
       const month = d.getMonth()
       const day = d.getDay()
       this.yourBookIs = `Your book is: ${hours}:${min}, ${day}.${month}.${year}`
-      this.bookDate = new Date(Date.UTC(year, month, day, t.getHours(), t.getMinutes(), 0))
+      this.bookDate = new Date(
+        year,
+        month,
+        day,
+        t.getHours(),
+        t.getMinutes(),
+        0,
+        0,
+      )
     }
   }
 
@@ -71,7 +85,11 @@ export class BookComponent {
   }
 
   checkRepeats() {
-    if (this.repeatTimes > 0 && this.repeatOption && this.repeatOption !== RepeatOptions.no) {
+    if (
+      this.repeatTimes > 0 &&
+      this.repeatOption &&
+      this.repeatOption !== RepeatOptions.no
+    ) {
       this.showRepeats = `Repeat every ${this.repeatOption} ${this.repeatTimes} times`
     } else {
       this.showRepeats = ''
@@ -79,9 +97,13 @@ export class BookComponent {
   }
 
   onBook() {
-    if( this.bookDate ) {
-      this.bookThisService.checkData(this.bookDate, this.repeatOption, this.repeatTimes, this.room)
+    if (this.bookDate) {
+      this.bookThisService.checkData(
+        this.bookDate,
+        this.repeatOption,
+        this.repeatTimes,
+        this.room,
+      )
     }
   }
-
 }

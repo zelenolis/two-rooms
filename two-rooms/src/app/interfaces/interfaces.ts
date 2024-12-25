@@ -1,41 +1,41 @@
 export interface BookList {
-    items: Booking[]
+  items: Booking[]
 }
 
 export interface Booking {
-    objectId: string,
-    team: string,
-    time: string,
-    date: string,
-    duration: string,
-    room: string
+  objectId?: string
+  team: string
+  time: string
+  date: string
+  duration: string
+  room: string
 }
 
 export interface SendBooking {
-    team: string,
-    time: string,
-    date: string,
-    duration: string,
-    room: string
+  team: string
+  time: string
+  date: string
+  duration: string
+  room: string
 }
 
 export interface UserResponce {
-    results: any[]
+  results: any[]
 }
 
 export interface LoginForm {
-    email: string,
-    pass: string
+  email: string
+  pass: string
 }
 
 export enum Rooms {
-    any = "any",
-    red = "red",
-    yellow = "yellow"
+  any = 'any',
+  red = 'red',
+  yellow = 'yellow',
 }
 
 export enum RepeatOptions {
-    no = "no repeat",
-    day = "day",
-    week = "week"
+  no = 'no repeat',
+  day = 'day',
+  week = 'week',
 }
