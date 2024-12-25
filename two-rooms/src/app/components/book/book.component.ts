@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, model, ViewEncapsulation } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject, model, ViewEncapsulation } from '@angular/core'
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatSelectModule} from '@angular/material/select'
 import {MatTimepickerModule} from '@angular/material/timepicker'
@@ -7,6 +7,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker'
 import { FormsModule } from '@angular/forms'
 import { MatCardModule } from '@angular/material/card'
 import { NgFor } from '@angular/common'
+import { BookThisService } from '../../services/book-this.service'
+import { Rooms, RepeatOptions } from '../../interfaces/interfaces'
 
 
 @Component({
@@ -26,12 +28,15 @@ import { NgFor } from '@angular/common'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BookComponent {
+  private readonly bookThisService = inject(BookThisService)
+  private bookDate: Date | undefined
+
   protected repeates: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   protected yourBookIs = 'Please select date and time'
-  protected repeatOption = ''
+  protected repeatOption: RepeatOptions = RepeatOptions.no
   protected repeatTimes = 0
   protected showRepeats = ''
-  protected room = 'any'
+  protected room: Rooms = Rooms.any
 
   selected = model<Date | null>(null)
   selectedTime: string | undefined
@@ -47,11 +52,11 @@ export class BookComponent {
       const month = d.getMonth()
       const day = d.getDay()
       this.yourBookIs = `Your book is: ${hours}:${min}, ${day}.${month}.${year}`
-      console.log(`${hours}:${min}, ${day}.${month}.${year}`)
+      this.bookDate = new Date(Date.UTC(year, month, day, t.getHours(), t.getMinutes(), 0))
     }
   }
 
-  rooms(val: string) {
+  rooms(val: Rooms) {
     this.room = val
   }
 
@@ -60,16 +65,22 @@ export class BookComponent {
     this.checkRepeats()
   }
 
-  repeats(val: string) {
+  repeats(val: RepeatOptions) {
     this.repeatOption = val
     this.checkRepeats()
   }
 
   checkRepeats() {
-    if (this.repeatTimes > 0 && this.repeatOption && this.repeatOption !== 'no repeat') {
+    if (this.repeatTimes > 0 && this.repeatOption && this.repeatOption !== RepeatOptions.no) {
       this.showRepeats = `Repeat every ${this.repeatOption} ${this.repeatTimes} times`
     } else {
       this.showRepeats = ''
+    }
+  }
+
+  onBook() {
+    if( this.bookDate ) {
+      this.bookThisService.checkData(this.bookDate, this.repeatOption, this.repeatTimes, this.room)
     }
   }
 

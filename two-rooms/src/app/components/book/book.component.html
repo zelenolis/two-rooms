@@ -11,7 +11,7 @@
             <mat-label>Pick a time</mat-label>
             <input matInput [matTimepicker]="picker1" [(ngModel)]="selectedTime" (ngModelChange)="dateChanged()">
             <mat-timepicker-toggle matIconSuffix [for]="picker1"/>
-            <mat-timepicker #picker1/>
+            <mat-timepicker interval="60m" #picker1/>
           </mat-form-field>
     </div>
     <div>
@@ -48,4 +48,4 @@
         </mat-form-field>
     </div>
 </div>
-<button class="book_button">Book It</button>
+<button class="book_button" (click)="onBook()">Book It</button>
