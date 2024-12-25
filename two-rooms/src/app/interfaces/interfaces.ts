@@ -3,9 +3,12 @@ export interface BookList {
 }
 
 export interface Booking {
+    objectId: string,
     team: string,
     time: string,
-    date: string
+    date: string,
+    duration: string,
+    room: string
 }
 
 export interface UserResponce {

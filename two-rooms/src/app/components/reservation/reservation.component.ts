@@ -11,9 +11,12 @@ export class ReservationComponent {
 
   @Input()
     pickedDate: Booking = {
+      objectId: '',
       team: '',
       time: '',
       date: '',
+      duration: '',
+      room: ''
     }
 
 }

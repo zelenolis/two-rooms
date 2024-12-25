@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Rooms, RepeatOptions } from '../interfaces/interfaces';
+import { Booking, Rooms, RepeatOptions } from '../interfaces/interfaces';
 import { TeamNameService } from './team-name.service';
 
 @Injectable({
@@ -7,6 +7,7 @@ import { TeamNameService } from './team-name.service';
 })
 export class BookThisService {
   private readonly teamNameService = inject(TeamNameService)
+  private bookArray: Booking[] = []
   
   checkData(date: Date, repeatOption: RepeatOptions, repeatTimes: number, room: Rooms ) {
     const teamName = this.teamNameService.getName()

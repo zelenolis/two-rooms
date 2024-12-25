@@ -36,9 +36,12 @@ export class LoginService {
       switchMap(() => this.getHttpService.getRequest(this.storeUrl)),
       tap((data: UserResponce) => {
         const transformData = data.results.map(item => ({
+          objectId: item.objectId,
           team: item.team,
           time: item.time,
-          date: item.date
+          date: item.date,
+          duration: item.duration,
+          room: item.room
         }))
         this.store.dispatch(addAllBooksAction({newBooks: transformData}))
         this.router.navigate([""])
