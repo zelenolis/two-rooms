@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Booking, Rooms, RepeatOptions } from '../interfaces/interfaces';
+import { SendBooking, Rooms, RepeatOptions } from '../interfaces/interfaces';
 import { TeamNameService } from './team-name.service';
 
 @Injectable({
@@ -7,11 +7,12 @@ import { TeamNameService } from './team-name.service';
 })
 export class BookThisService {
   private readonly teamNameService = inject(TeamNameService)
-  private bookArray: Booking[] = []
+  private bookArray: SendBooking[] = []
   
   checkData(date: Date, repeatOption: RepeatOptions, repeatTimes: number, room: Rooms ) {
     const teamName = this.teamNameService.getName()
     const duration = 1
+    const time = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0')
     let bookedRoom = Rooms.red
     if (repeatOption !== RepeatOptions.no && repeatTimes === 0) {
       repeatTimes = 1
@@ -21,25 +22,29 @@ export class BookThisService {
     }
     switch (repeatOption) {
       case RepeatOptions.no:
-        // action add
+        this.pushData(teamName, time, date.toString(), duration.toString(), bookedRoom)
         break
       case RepeatOptions.day:
         for (let i = 0; i < repeatTimes; i++) {
-          // action add + i time
+          this.pushData(teamName, time, date.toString(), duration.toString(), bookedRoom)
+          date.setDate(date.getDate() + 1)
         }
         break
       case RepeatOptions.week:
         for (let i = 0; i < repeatTimes; i++) {
-          // action add + i time * 7
+          this.pushData(teamName, time, date.toString(), duration.toString(), bookedRoom)
+          date.setDate(date.getDate() + 7)
         }
         break
       default:
         break
     }
-    console.log('Date: ', date)
-    console.log('repeatOption: ', repeatOption)
-    console.log('repeatTimes: ', repeatTimes)
-    console.log('room: ', room)
+    console.log(this.bookArray)
+  }
+
+  private pushData(team: string, time: string, date: string, duration: string, room: string) {
+    const item: SendBooking = {team: team, time: time, date: date, duration: duration, room: room}
+    this.bookArray.push(item)
   }
 
 }
