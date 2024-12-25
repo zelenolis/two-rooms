@@ -1,12 +1,12 @@
 <h3>Booking</h3>
 <div class="wrapper">
-    <div class="wrapper1">
+    <div>
         <mat-calendar 
             [(selected)]="selected" 
             (selectedChange)="dateChanged()">
         </mat-calendar>
     </div>
-    <div class="wrapper2">
+    <div>
         <mat-form-field>
             <mat-label>Pick a time</mat-label>
             <input matInput [matTimepicker]="picker1" [(ngModel)]="selectedTime" (ngModelChange)="dateChanged()">
@@ -14,7 +14,7 @@
             <mat-timepicker #picker1/>
           </mat-form-field>
     </div>
-    <div class="wrapper3">
+    <div>
         <mat-form-field>
             <mat-label>Select Room</mat-label>
             <mat-select (selectionChange)="rooms($event.value)">
