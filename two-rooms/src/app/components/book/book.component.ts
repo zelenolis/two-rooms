@@ -56,7 +56,7 @@ export class BookComponent {
       const d = new Date(pick)
       const year = d.getFullYear()
       const month = d.getMonth()
-      const day = d.getDay()
+      const day = d.getDate()
       this.yourBookIs = `Your book is: ${hours}:${min}, ${day}.${month}.${year}`
       this.bookDate = new Date(
         year,

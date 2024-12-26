@@ -1,14 +1,12 @@
 import { inject, Injectable } from '@angular/core'
 import { SendBooking, Rooms, RepeatOptions } from '../interfaces/interfaces'
 import { TeamNameService } from './team-name.service'
-import { Store } from '@ngrx/store'
 import { PushNewBookService } from './push-new-book.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookThisService {
-  private readonly store = inject(Store)
   private readonly teamNameService = inject(TeamNameService)
   private readonly pushNewBookService = inject(PushNewBookService)
   private bookArray: SendBooking[] = []
@@ -37,7 +35,7 @@ export class BookThisService {
         this.pushData(
           teamName,
           time,
-          date.toString(),
+          date.toISOString(),
           duration.toString(),
           bookedRoom,
         )
@@ -47,7 +45,7 @@ export class BookThisService {
           this.pushData(
             teamName,
             time,
-            date.toString(),
+            date.toISOString(),
             duration.toString(),
             bookedRoom,
           )
@@ -59,7 +57,7 @@ export class BookThisService {
           this.pushData(
             teamName,
             time,
-            date.toString(),
+            date.toISOString(),
             duration.toString(),
             bookedRoom,
           )
@@ -72,7 +70,6 @@ export class BookThisService {
     console.log(this.bookArray)
     if (this.bookArray.length > 0) {
       this.pushNewBookService.pushRequest(this.bookArray)
-      //this.store.dispatch(addAllBooksAction({newBooks: this.bookArray}))
       this.bookArray = []
     }
   }

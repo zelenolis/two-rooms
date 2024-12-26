@@ -49,7 +49,6 @@ export class DashboardComponent implements OnInit {
   public specialDates: string[] = []
 
   dateClass = (date: Date) => {
-    date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
     const formatDate = date.toISOString()
     return this.specialDates.some((val) => val === formatDate)
       ? 'highlight'
@@ -60,7 +59,6 @@ export class DashboardComponent implements OnInit {
     const pick = this.selected()
     if (pick) {
       const date = new Date(pick)
-      date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
       this.myDate = date
       const formatDate = date.toISOString()
       this.specialDates.some((val) => val === formatDate)
@@ -84,7 +82,11 @@ export class DashboardComponent implements OnInit {
       .pipe(
         map((val) => {
           for (const items of val) {
-            this.specialDates.push(items.date)
+            const newDate = new Date(items.date)
+            newDate.setHours(0)
+            newDate.setMinutes(0)
+            newDate.setSeconds(0)
+            this.specialDates.push(newDate.toISOString())
           }
         }),
       )

@@ -9,7 +9,11 @@ export class SortByDatePipe implements PipeTransform {
     if (!pickedDate) {
       return dates
     }
-    const formatDate = pickedDate.toISOString()
-    return dates.filter((val) => val.date === formatDate)
+    return dates.filter((val) => {
+      const newDate = new Date(val.date)
+      newDate.setHours(0)
+      newDate.setMinutes(0)
+      newDate.setSeconds(0)
+      return newDate.toISOString() === pickedDate.toISOString()})
   }
 }
