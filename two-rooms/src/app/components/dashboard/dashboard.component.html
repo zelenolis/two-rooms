@@ -15,7 +15,8 @@
       <mat-calendar></mat-calendar>
     </ng-template>
   </div>
-  <div *ngIf="showBooks">
+  <div class="book_list" *ngIf="showBooks">
+    <h4>Your bookings</h4>
     <div *ngIf="bookedDates$ | async as dates">
       <div *ngIf="dates.length">
         <div *ngFor="let pickedDate of dates | sortByDate: myDate">
