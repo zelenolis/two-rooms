@@ -67,7 +67,6 @@ export class BookThisService {
       default:
         break
     }
-    console.log(this.bookArray)
     if (this.bookArray.length > 0) {
       this.pushNewBookService.pushRequest(this.bookArray)
       this.bookArray = []

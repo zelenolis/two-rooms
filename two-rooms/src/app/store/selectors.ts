@@ -10,7 +10,9 @@ export const selectBooksByTeam = (team: string = 'team0') =>
 
 export const selectByDate = (date: string) =>
   createSelector(storeFeatureSelector, (state) =>
-    state.items.some((val) => {
-      return val.date == date
+    state.items.filter((val) => {
+      const check = date.split('T')[0]
+      const newVal = val.date.split('T')[0]
+      return check === newVal
     }),
   )

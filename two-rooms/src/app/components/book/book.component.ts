@@ -7,7 +7,6 @@ import {
 } from '@angular/core'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSelectModule } from '@angular/material/select'
-import { MatTimepickerModule } from '@angular/material/timepicker'
 import { MatInputModule } from '@angular/material/input'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { FormsModule } from '@angular/forms'
@@ -15,6 +14,10 @@ import { MatCardModule } from '@angular/material/card'
 import { NgFor } from '@angular/common'
 import { BookThisService } from '../../services/book-this.service'
 import { Rooms, RepeatOptions } from '../../interfaces/interfaces'
+import { TimePickerComponent } from '../time-picker/time-picker.component'
+import { Store } from '@ngrx/store'
+import { selectByDate } from '../../store/selectors'
+import { map, take } from 'rxjs'
 
 @Component({
   selector: 'app-book',
@@ -26,7 +29,7 @@ import { Rooms, RepeatOptions } from '../../interfaces/interfaces'
     MatInputModule,
     MatDatepickerModule,
     FormsModule,
-    MatTimepickerModule,
+    TimePickerComponent
   ],
   templateUrl: './book.component.html',
   styleUrl: './book.component.scss',
@@ -35,6 +38,7 @@ import { Rooms, RepeatOptions } from '../../interfaces/interfaces'
 })
 export class BookComponent {
   private readonly bookThisService = inject(BookThisService)
+  private readonly store = inject(Store)
   private bookDate: Date | undefined
 
   protected repeates: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -43,31 +47,59 @@ export class BookComponent {
   protected repeatTimes = 0
   protected showRepeats = ''
   protected room: Rooms = Rooms.any
+  protected specialTimes: string[] = []
+  protected selectedHours: string = ''
 
   selected = model<Date | null>(null)
-  selectedTime: string | undefined
+
+  hourSelected(time: string) {
+    this.selectedHours = time
+  }
 
   dateChanged() {
     const pick = this.selected()
-    if (pick && this.selectedTime) {
-      const t = new Date(this.selectedTime)
-      const hours = t.getHours().toString().padStart(2, '0')
-      const min = t.getMinutes().toString().padStart(2, '0')
+    const newArr: string[] = []
+    this.specialTimes = newArr
+    if (pick) {
+      const d = new Date(pick)
+      this.udateClosedTimes(d)
+    }
+    if (pick && this.selectedHours) {
       const d = new Date(pick)
       const year = d.getFullYear()
       const month = d.getMonth()
       const day = d.getDate()
-      this.yourBookIs = `Your book is: ${hours}:${min}, ${day}.${month}.${year}`
+      this.yourBookIs = `Your book is: ${this.selectedHours}, ${day}.${month}.${year}`
       this.bookDate = new Date(
         year,
         month,
         day,
-        t.getHours(),
-        t.getMinutes(),
+        +this.selectedHours.split(':')[0],
+        +this.selectedHours.split(':')[1],
         0,
         0,
       )
     }
+  }
+
+  udateClosedTimes(date: Date) {
+    if (!date) { return }
+    date.setHours(0)
+    date.setMinutes(0)
+    this.specialTimes.length = 0
+    const bookedDates$ = this.store.select(selectByDate(date.toISOString()))
+    bookedDates$
+      .pipe(
+        take(1),
+        map((val) => {
+          for (const items of val) {
+            const newArr = []
+            newArr.push(items.time)
+            this.specialTimes = newArr
+          }
+        })
+      )
+      .subscribe()
   }
 
   rooms(val: Rooms) {
