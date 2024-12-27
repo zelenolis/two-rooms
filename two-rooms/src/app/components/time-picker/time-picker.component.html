@@ -1,0 +1,11 @@
+<p class="time_header">Сhoose any time</p>
+<div class="time_grid">
+    <div class="time_item" *ngFor="let hour of hours" 
+        [ngClass]="{
+            'special-time': isSpecialTime(hour),
+            'selected-date': isSelected(hour)
+        }"
+        (click)="selectTime(hour)">
+        <p>{{ hour }}</p>
+    </div>
+</div>
