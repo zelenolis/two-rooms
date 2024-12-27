@@ -54,6 +54,7 @@ export class BookComponent {
 
   hourSelected(time: string) {
     this.selectedHours = time
+    this.dateChanged()
   }
 
   dateChanged() {
