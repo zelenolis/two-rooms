@@ -18,6 +18,7 @@ import { TimePickerComponent } from '../time-picker/time-picker.component'
 import { Store } from '@ngrx/store'
 import { selectByDate } from '../../store/selectors'
 import { map, take } from 'rxjs'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-book',
@@ -39,6 +40,7 @@ import { map, take } from 'rxjs'
 export class BookComponent {
   private readonly bookThisService = inject(BookThisService)
   private readonly store = inject(Store)
+  private readonly router = inject(Router)
   private bookDate: Date | undefined
 
   protected repeates: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -85,7 +87,7 @@ export class BookComponent {
 
   udateClosedTimes(date: Date) {
     if (!date) { return }
-    date.setHours(0)
+    date.setHours(12)
     date.setMinutes(0)
     this.specialTimes.length = 0
     const bookedDates$ = this.store.select(selectByDate(date.toISOString()))
@@ -139,4 +141,9 @@ export class BookComponent {
       )
     }
   }
+
+  onBack(){
+    this.router.navigate([''])
+  }
+
 }

@@ -5,8 +5,18 @@
   grid-template-rows: auto;
 }
 
+.back_button {
+  padding: 1rem;
+  border: none;
+  cursor: pointer;
+  color: var(--main1);
+  background: none;
+  font-weight: 600;
+}
+
 .book_button {
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .book_option {
