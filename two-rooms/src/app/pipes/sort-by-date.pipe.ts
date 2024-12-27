@@ -14,6 +14,7 @@ export class SortByDatePipe implements PipeTransform {
       newDate.setHours(0)
       newDate.setMinutes(0)
       newDate.setSeconds(0)
-      return newDate.toISOString() === pickedDate.toISOString()})
+      return newDate.toISOString() === pickedDate.toISOString()
+    })
   }
 }

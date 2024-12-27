@@ -30,7 +30,7 @@ import { Router } from '@angular/router'
     MatInputModule,
     MatDatepickerModule,
     FormsModule,
-    TimePickerComponent
+    TimePickerComponent,
   ],
   templateUrl: './book.component.html',
   styleUrl: './book.component.scss',
@@ -89,7 +89,9 @@ export class BookComponent {
   }
 
   udateClosedTimes(date: Date) {
-    if (!date) { return }
+    if (!date) {
+      return
+    }
     date.setHours(12)
     date.setMinutes(0)
     this.specialTimes.length = 0
@@ -103,7 +105,7 @@ export class BookComponent {
             newArr.push(items.time)
             this.specialTimes = newArr
           }
-        })
+        }),
       )
       .subscribe()
   }
@@ -145,8 +147,7 @@ export class BookComponent {
     }
   }
 
-  onBack(){
+  onBack() {
     this.router.navigate([''])
   }
-
 }
