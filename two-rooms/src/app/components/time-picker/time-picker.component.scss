@@ -1,0 +1,30 @@
+.time_header {
+    text-align: center;
+}
+
+.time_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+.time_item {
+    text-align: center;
+    color: var(--black);
+    cursor: pointer;
+
+    & p {
+        margin: 0.2rem 0;        
+    }
+}
+
+.special-time {
+    color: var(--main1);
+    font-weight: bold;
+    cursor: auto;
+  }
+
+.selected-date {
+    color: var(--main2);
+    font-weight: bold;
+    cursor: auto;
+}

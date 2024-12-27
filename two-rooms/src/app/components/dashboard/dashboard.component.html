@@ -1,0 +1,31 @@
+<div class="header">
+  <h2>Team {{ teamName }}</h2>
+  <button class="header_logout" (click)="onLogout()">Log Out</button>
+</div>
+<div class="main">
+  <div *ngIf="bookedDates$ | async as dates">
+    <div *ngIf="dates.length; else elseBlock">
+      <mat-calendar
+        [(selected)]="selected"
+        [dateClass]="dateClass"
+        (selectedChange)="selectDate()"
+      ></mat-calendar>
+    </div>
+    <ng-template #elseBlock>
+      <mat-calendar></mat-calendar>
+    </ng-template>
+  </div>
+  <div class="book_list" *ngIf="showBooks">
+    <h4>Your bookings</h4>
+    <div *ngIf="bookedDates$ | async as dates">
+      <div *ngIf="dates.length">
+        <div *ngFor="let pickedDate of dates | sortByDate: myDate">
+          <app-reservation [pickedDate]="pickedDate"></app-reservation>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <button (click)="onBooking()">Book new date</button>
+</div>

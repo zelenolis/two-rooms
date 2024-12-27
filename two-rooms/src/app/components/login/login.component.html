@@ -1,0 +1,22 @@
+<div class="login">
+  <p>Login</p>
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+    <span [ngClass]="{ login_hidden: hidden }" class="login_loader"></span>
+    <div [ngClass]="{ login_hidden: !hidden }" class="login_field">
+      <label for="email">e-mail:</label>
+      <input type="email" id="email" name="email" ngModel required />
+    </div>
+    <div [ngClass]="{ login_hidden: !hidden }" class="login_field">
+      <label for="pass">password:</label>
+      <input type="pass" id="pass" name="pass" ngModel required />
+    </div>
+    <button
+      [ngClass]="{ login_hidden: !hidden }"
+      type="submit"
+      [disabled]="!loginForm.valid"
+    >
+      Login
+    </button>
+  </form>
+  <button class="register" (click)="onClick()">have not an account yet?</button>
+</div>

@@ -1,0 +1,25 @@
+.wrapper {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+}
+
+.back_button {
+  padding: 1rem;
+  border: none;
+  cursor: pointer;
+  color: var(--main1);
+  background: none;
+  font-weight: 600;
+}
+
+.book_button {
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.book_option {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,46 @@
+<button class="back_button" (click)="onBack()"> &lt; back to dashboard</button>
+<div class="wrapper">
+  <div>
+    <mat-calendar [(selected)]="selected" (selectedChange)="dateChanged()">
+    </mat-calendar>
+  </div>
+  <div>
+    <app-time-picker [specialTimes]="specialTimes" (timeSelected)="hourSelected($event)"></app-time-picker>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label>Select Room</mat-label>
+      <mat-select (selectionChange)="rooms($event.value)">
+        <mat-option value="any">Any</mat-option>
+        <mat-option value="red">Red room</mat-option>
+        <mat-option value="yellow">Yellow room</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div class="book_option">
+  <div>
+    <p>{{ yourBookIs }}</p>
+    <p>Selected room : {{ room }}</p>
+    <p>{{ showRepeats }}</p>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label>Repeat option</mat-label>
+      <mat-select (selectionChange)="repeats($event.value)">
+        <mat-option value="no repeat">No repeat</mat-option>
+        <mat-option value="day">Every day</mat-option>
+        <mat-option value="week">Every week</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Times to repeat</mat-label>
+      <mat-select #repeatTimes (selectionChange)="timeRepeat($event.value)">
+        <mat-option *ngFor="let repeat of repeates" [value]="repeat">{{
+          repeat
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<button class="book_button" (click)="onBook()">Book It</button>

@@ -1,0 +1,10 @@
+.date {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  column-gap: 1rem;
+
+  & button {
+    margin-left: 1rem;
+  }
+}
