@@ -24,20 +24,23 @@ export class TeamNameService {
     const localName = localStorage.getItem('teamName')
     if (!this.teamName && localName) {
       this.teamName = localName
-      this.getHttpService.getRequest(this.storeUrl).pipe(
-        take(1),
-        tap((data: UserResponce) => {
-          const transformData = data.results.map((item) => ({
-            objectId: item.objectId,
-            team: item.team,
-            time: item.time,
-            date: item.date,
-            duration: item.duration,
-            room: item.room,
-          }))
-          this.store.dispatch(refreshStateAction({ newBooks: transformData }))
-        })
-      ).subscribe()
+      this.getHttpService
+        .getRequest(this.storeUrl)
+        .pipe(
+          take(1),
+          tap((data: UserResponce) => {
+            const transformData = data.results.map((item) => ({
+              objectId: item.objectId,
+              team: item.team,
+              time: item.time,
+              date: item.date,
+              duration: item.duration,
+              room: item.room,
+            }))
+            this.store.dispatch(refreshStateAction({ newBooks: transformData }))
+          }),
+        )
+        .subscribe()
     }
     return this.teamName
   }

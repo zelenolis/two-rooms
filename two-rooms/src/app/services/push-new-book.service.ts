@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
-import { Booking, SendBooking } from '../interfaces/interfaces'
+import { Booking } from '../interfaces/interfaces'
 import { from, mergeMap, tap, toArray } from 'rxjs'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
@@ -21,17 +21,20 @@ export class PushNewBookService {
   pushRequest(data: Booking[]) {
     from(data)
       .pipe(
-        mergeMap((item) => this.http.post<{ objectId: string }>(this.storeUrl, JSON.stringify(item)).pipe(
-          tap(res => {
-            item.objectId = res.objectId
-            this.store.dispatch(addBookAction({newBook: item}))
-          })
-        )
+        mergeMap((item) =>
+          this.http
+            .post<{ objectId: string }>(this.storeUrl, JSON.stringify(item))
+            .pipe(
+              tap((res) => {
+                item.objectId = res.objectId
+                this.store.dispatch(addBookAction({ newBook: item }))
+              }),
+            ),
         ),
         toArray(),
       )
       .subscribe({
-        next: (res) => {
+        next: () => {
           this.matSnackBar.open('Date(s) succesfully booked', 'OK', {
             duration: 3000,
           })

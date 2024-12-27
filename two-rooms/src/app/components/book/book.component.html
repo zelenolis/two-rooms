@@ -1,11 +1,14 @@
-<button class="back_button" (click)="onBack()"> &lt; back to dashboard</button>
+<button class="back_button" (click)="onBack()">&lt; back to dashboard</button>
 <div class="wrapper">
   <div>
     <mat-calendar [(selected)]="selected" (selectedChange)="dateChanged()">
     </mat-calendar>
   </div>
   <div>
-    <app-time-picker [specialTimes]="specialTimes" (timeSelected)="hourSelected($event)"></app-time-picker>
+    <app-time-picker
+      [specialTimes]="specialTimes"
+      (timeSelected)="hourSelected($event)"
+    ></app-time-picker>
   </div>
   <div>
     <mat-form-field>
