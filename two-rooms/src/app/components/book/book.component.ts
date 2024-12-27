@@ -56,6 +56,9 @@ export class BookComponent {
 
   hourSelected(time: string) {
     this.selectedHours = time
+    if (!time) {
+      this.yourBookIs = 'Please select date and time'
+    }
     this.dateChanged()
   }
 

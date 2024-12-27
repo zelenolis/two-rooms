@@ -48,7 +48,10 @@ export class TimePickerComponent implements OnChanges {
   selectTime(hour: string) {
     this.selectedHour = hour
     const closed = this.specialTimes.some(val => val === hour)
-    if (closed) { return }
+    if (closed) {
+      this.timeSelected.emit(undefined)
+      return
+    }
     this.timeSelected.emit(hour)
   }
 
