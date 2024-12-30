@@ -100,8 +100,8 @@ export class BookComponent {
       .pipe(
         take(1),
         map((val) => {
+          const newArr = [];
           for (const items of val) {
-            const newArr = [];
             newArr.push(items.time);
             this.specialTimes = newArr;
           }
