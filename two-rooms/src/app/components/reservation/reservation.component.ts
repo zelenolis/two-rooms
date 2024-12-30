@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core'
-import { Booking } from '../../interfaces/interfaces'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Booking } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-reservation',
   imports: [],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReservationComponent {
   @Input()
@@ -16,5 +17,5 @@ export class ReservationComponent {
     date: '',
     duration: '',
     room: '',
-  }
+  };
 }

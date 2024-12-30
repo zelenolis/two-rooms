@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
-import { catchError, map, Observable } from 'rxjs'
-import { UserResponce } from '../interfaces/interfaces'
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map, Observable } from 'rxjs';
+import { UserResponce } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -13,14 +13,14 @@ export class GetHttpService {
     return this.http.get<UserResponce>(url).pipe(
       map((res: UserResponce) => {
         if (res && Array.isArray(res.results)) {
-          return res
+          return res;
         } else {
-          throw new Error('invalid format')
+          throw new Error('invalid format');
         }
       }),
       catchError(() => {
-        throw new Error('Something went wrong')
+        throw new Error('Something went wrong');
       }),
-    )
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { NgClass, NgFor } from '@angular/common'
+import { NgClass, NgFor } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,8 +7,8 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
-} from '@angular/core'
-import { ChangeDetectorRef } from '@angular/core'
+} from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-time-picker',
@@ -18,47 +18,47 @@ import { ChangeDetectorRef } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimePickerComponent implements OnChanges {
-  @Input() specialTimes: string[] = []
-  @Output() timeSelected = new EventEmitter<string>()
+  @Input() specialTimes: string[] = [];
+  @Output() timeSelected = new EventEmitter<string>();
 
-  protected hours: string[] = []
-  protected selectedHour: string = ''
+  protected hours: string[] = [];
+  protected selectedHour: string = '';
 
   constructor(private ref: ChangeDetectorRef) {
     for (let i = 1; i <= 24; i++) {
-      this.hours.push(this.formatTime(i))
+      this.hours.push(this.formatTime(i));
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['specialTimes']) {
-      this.ref.markForCheck()
+      this.ref.markForCheck();
     }
   }
 
   formatTime(hour: number): string {
-    return hour.toString().padStart(2, '0') + ':00'
+    return hour.toString().padStart(2, '0') + ':00';
   }
 
   isSpecialTime(time: string): boolean {
-    return this.specialTimes.includes(time)
+    return this.specialTimes.includes(time);
   }
 
   isSelected(time: string) {
     if (time === this.selectedHour) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
   }
 
   selectTime(hour: string) {
-    this.selectedHour = hour
-    const closed = this.specialTimes.some((val) => val === hour)
+    this.selectedHour = hour;
+    const closed = this.specialTimes.some((val) => val === hour);
     if (closed) {
-      this.timeSelected.emit(undefined)
-      return
+      this.timeSelected.emit(undefined);
+      return;
     }
-    this.timeSelected.emit(hour)
+    this.timeSelected.emit(hour);
   }
 }

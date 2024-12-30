@@ -11,18 +11,18 @@
 
 .back_button {
   margin-left: 1rem;
-    color: var(--main1);
-    background: none;
-    border-radius: 5px;
-    border-color: var(--main1);
-    padding: 5px 20px;
-    
-    &:hover {
-      cursor: pointer;
-      color: var(--background);
-      background-color: var(--main1);
-      font-weight: 600;
-    }
+  color: var(--main1);
+  background: none;
+  border-radius: 5px;
+  border-color: var(--main1);
+  padding: 5px 20px;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--background);
+    background-color: var(--main1);
+    font-weight: 600;
+  }
 }
 
 .book_button {

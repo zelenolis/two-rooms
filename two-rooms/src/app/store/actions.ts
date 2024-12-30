@@ -1,5 +1,5 @@
-import { createAction, props } from '@ngrx/store'
-import { Booking } from '../interfaces/interfaces'
+import { createAction, props } from '@ngrx/store';
+import { Booking } from '../interfaces/interfaces';
 
 export enum StoreActionsType {
   addBook = '[ADD] add a booking',
@@ -10,14 +10,14 @@ export enum StoreActionsType {
 export const addBookAction = createAction(
   StoreActionsType.addBook,
   props<{ newBook: Booking }>(),
-)
+);
 
 export const addAllBooksAction = createAction(
   StoreActionsType.addAllBooks,
   props<{ newBooks: Booking[] }>(),
-)
+);
 
 export const refreshStateAction = createAction(
   StoreActionsType.refreshState,
   props<{ newBooks: Booking[] }>(),
-)
+);
