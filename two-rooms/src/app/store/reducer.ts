@@ -4,6 +4,7 @@ import {
   addBookAction,
   addAllBooksAction,
   refreshStateAction,
+  delBookAction,
 } from './actions';
 
 export const STORE_REDUCER_NODE = 'books';
@@ -25,5 +26,9 @@ export const bookReducer = createReducer(
   on(refreshStateAction, (state: BookList, { newBooks }) => ({
     ...state,
     items: [...newBooks],
+  })),
+  on(delBookAction, (state: BookList, { delId }) => ({
+    ...state,
+    items: state.items.filter(item => item.objectId !== delId),
   })),
 );

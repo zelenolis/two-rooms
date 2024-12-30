@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core
 import { Booking } from '../../interfaces/interfaces';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmPopupComponent } from '../confirm-popup/confirm-popup.component';
+import { DeleteItemService } from '../../services/delete-item.service';
 
 @Component({
   selector: 'app-reservation',
@@ -12,6 +13,7 @@ import { ConfirmPopupComponent } from '../confirm-popup/confirm-popup.component'
 })
 export class ReservationComponent {
   private readonly matDialog = inject(MatDialog)
+  private readonly deleteItemService = inject(DeleteItemService)
 
   @Input()
   pickedDate: Booking = {
@@ -29,9 +31,9 @@ export class ReservationComponent {
     const dialogRef = this.matDialog.open(ConfirmPopupComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('true')
+        this.deleteItemService.delRequest(this.pickedDate.objectId)
       } else {
-        console.log('false')
+        return
       }
     });
   }

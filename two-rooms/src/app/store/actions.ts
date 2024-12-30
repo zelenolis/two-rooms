@@ -5,6 +5,7 @@ export enum StoreActionsType {
   addBook = '[ADD] add a booking',
   addAllBooks = '[ADD] add many bookings',
   refreshState = '[ADD] refresh all bookings',
+  delBook = '[DEL] delete a booking',
 }
 
 export const addBookAction = createAction(
@@ -15,6 +16,11 @@ export const addBookAction = createAction(
 export const addAllBooksAction = createAction(
   StoreActionsType.addAllBooks,
   props<{ newBooks: Booking[] }>(),
+);
+
+export const delBookAction = createAction(
+  StoreActionsType.delBook,
+  props<{ delId: string }>(),
 );
 
 export const refreshStateAction = createAction(
