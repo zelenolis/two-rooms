@@ -16,7 +16,7 @@ export class BookThisService {
     repeatOption: RepeatOptions,
     repeatTimes: number,
     room: Rooms,
-  ) {
+  ): void {
     const teamName = this.teamNameService.getName();
     const duration = 1;
     const time =
@@ -79,7 +79,7 @@ export class BookThisService {
     date: string,
     duration: string,
     room: string,
-  ) {
+  ): void {
     const item: SendBooking = {
       team: team,
       time: time,

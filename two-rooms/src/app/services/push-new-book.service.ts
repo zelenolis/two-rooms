@@ -18,7 +18,7 @@ export class PushNewBookService {
 
   constructor(private http: HttpClient) {}
 
-  pushRequest(data: Booking[]) {
+  pushRequest(data: Booking[]): void {
     from(data)
       .pipe(
         mergeMap((item) =>

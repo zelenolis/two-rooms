@@ -14,7 +14,7 @@ export class DeleteItemService {
 
   constructor(private http: HttpClient) {}
 
-  delRequest(id: string | undefined) {
+  delRequest(id: string | undefined): void {
     if (!id) {
       return;
     }

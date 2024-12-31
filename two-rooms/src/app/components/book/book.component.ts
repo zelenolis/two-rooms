@@ -65,7 +65,7 @@ export class BookComponent implements OnInit {
 
   selected = model<Date | null>(null);
 
-  hourSelected(time: string) {
+  hourSelected(time: string): void {
     const freeRoom = this.specialTimes.filter((val) => val.time === time);
     if (freeRoom.length < 1) {
       this.disableSelectRoom = false;
@@ -89,7 +89,7 @@ export class BookComponent implements OnInit {
     this.dateChanged();
   }
 
-  dateChanged() {
+  dateChanged(): void {
     const pick = this.selected();
     const newArr: BookTimeRoom[] = [];
     this.specialTimes = newArr;
@@ -116,7 +116,7 @@ export class BookComponent implements OnInit {
     }
   }
 
-  udateClosedTimes(date: Date) {
+  udateClosedTimes(date: Date): void {
     if (!date) {
       return;
     }
@@ -141,18 +141,18 @@ export class BookComponent implements OnInit {
       .subscribe();
   }
 
-  timeRepeat(val: number) {
+  timeRepeat(val: number): void {
     this.repeatTimes = val;
     this.checkRepeats();
     // check for other days
   }
 
-  repeats(val: RepeatOptions) {
+  repeats(val: RepeatOptions): void {
     this.repeatOption = val;
     this.checkRepeats();
   }
 
-  checkRepeats() {
+  checkRepeats(): void {
     if (
       this.repeatTimes > 0 &&
       this.repeatOption &&
@@ -164,7 +164,7 @@ export class BookComponent implements OnInit {
     }
   }
 
-  onBook() {
+  onBook(): void {
     if (this.bookDate) {
       this.bookThisService.checkData(
         this.bookDate,
@@ -175,7 +175,7 @@ export class BookComponent implements OnInit {
     }
   }
 
-  onBack() {
+  onBack(): void {
     this.router.navigate(['']);
   }
 

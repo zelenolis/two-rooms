@@ -30,7 +30,7 @@ export class ReservationComponent {
     room: '',
   };
 
-  onDelete() {
+  onDelete(): void {
     const buttonElement = document.activeElement as HTMLElement;
     buttonElement.blur();
     const dialogRef = this.matDialog.open(ConfirmPopupComponent);

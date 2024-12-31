@@ -16,3 +16,12 @@ export const selectByDate = (date: string) =>
       return check === newVal;
     }),
   );
+
+export const selectRepeats = (date: string, time: string) =>
+  createSelector(storeFeatureSelector, (state) =>
+    state.items.filter((val) => {
+      const check = date.split('T')[0];
+      const newVal = val.date.split('T')[0];
+      return check === newVal && val.time === time;
+    }),
+  );

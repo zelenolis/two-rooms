@@ -48,14 +48,14 @@ export class DashboardComponent implements OnInit {
   );
   public specialDates: string[] = [];
 
-  dateClass = (date: Date) => {
+  dateClass = (date: Date): string => {
     const formatDate = date.toISOString();
     return this.specialDates.some((val) => val === formatDate)
       ? 'highlight'
       : '';
   };
 
-  selectDate() {
+  selectDate(): void {
     const pick = this.selected();
     if (pick) {
       const date = new Date(pick);
@@ -67,15 +67,15 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  onLogout() {
+  onLogout(): void {
     localStorage.clear();
     this.router.navigate(['/login']);
   }
-  onBooking() {
+  onBooking(): void {
     this.router.navigate(['/booking']);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.teamName = this.teamNameService.getName();
 
     this.bookedDates$

@@ -10,7 +10,7 @@ export class LoginCheckService {
   private readonly matSnackBar = inject(MatSnackBar);
   private readonly teamNameService = inject(TeamNameService);
 
-  checkUser(loginForm: LoginForm, users: UserResponce) {
+  checkUser(loginForm: LoginForm, users: UserResponce): boolean {
     const userMatch = users.results.find(
       (user) => user.email === loginForm.email,
     );

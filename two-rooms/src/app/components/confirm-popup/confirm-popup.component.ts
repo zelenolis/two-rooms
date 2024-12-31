@@ -15,11 +15,11 @@ import {
 export class ConfirmPopupComponent {
   private matDialogRef = inject(MatDialogRef);
 
-  onConfirm() {
+  onConfirm(): void {
     this.matDialogRef.close(true);
   }
 
-  onCancel() {
+  onCancel(): void {
     this.matDialogRef.close(false);
   }
 }

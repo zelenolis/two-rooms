@@ -19,7 +19,7 @@ export class LoginService {
   private readonly logUrl = 'https://parseapi.back4app.com/classes/team';
   private readonly storeUrl = 'https://parseapi.back4app.com/classes/booking';
 
-  loginChecks(loginForm: LoginForm) {
+  loginChecks(loginForm: LoginForm): void {
     let isLogged = true;
 
     const getLogged = this.getHttpService.getRequest(this.logUrl);

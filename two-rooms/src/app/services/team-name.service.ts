@@ -15,7 +15,7 @@ export class TeamNameService {
 
   private teamName = '';
 
-  setName(name: string) {
+  setName(name: string): void {
     this.teamName = name;
     localStorage.setItem('teamName', name);
   }

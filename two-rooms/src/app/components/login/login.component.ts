@@ -16,12 +16,13 @@ export class LoginComponent {
   private readonly loginService = inject(LoginService);
   hidden = true;
 
-  onSubmit(form: any) {
+  onSubmit(form: any): void {
     this.hidden = !this.hidden;
 
     this.loginService.loginChecks(form.value);
   }
-  onClick() {
+  
+  onClick(): void {
     this.router.navigate(['/registration']);
   }
 }
