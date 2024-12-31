@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
   selected = model<Date | null>(null);
 
   myDate: Date = new Date();
-  showBooks = false;
+  showBooks: boolean = false;
 
   private readonly router = inject(Router);
   private readonly store = inject(Store);
@@ -61,9 +61,7 @@ export class DashboardComponent implements OnInit {
       const date = new Date(pick);
       this.myDate = date;
       const formatDate = date.toISOString();
-      this.specialDates.some((val) => val === formatDate)
-        ? (this.showBooks = true)
-        : (this.showBooks = false);
+      this.showBooks = this.specialDates.some((val) => val === formatDate)
     }
   }
 
