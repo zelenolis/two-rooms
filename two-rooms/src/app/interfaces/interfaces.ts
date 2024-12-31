@@ -41,6 +41,6 @@ export enum RepeatOptions {
 }
 
 export interface BookTimeRoom {
-  time: string,
-  room: string
+  time: string;
+  room: string;
 }

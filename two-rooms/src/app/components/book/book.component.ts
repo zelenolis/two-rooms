@@ -14,7 +14,11 @@ import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { NgFor } from '@angular/common';
 import { BookThisService } from '../../services/book-this.service';
-import { Rooms, RepeatOptions, BookTimeRoom } from '../../interfaces/interfaces';
+import {
+  Rooms,
+  RepeatOptions,
+  BookTimeRoom,
+} from '../../interfaces/interfaces';
 import { TimePickerComponent } from '../time-picker/time-picker.component';
 import { Store } from '@ngrx/store';
 import { selectByDate } from '../../store/selectors';
@@ -49,7 +53,7 @@ export class BookComponent implements OnInit {
 
   protected repeates: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   protected yourBookIs = 'Please select date and time';
-  protected closedRooms: string = ''
+  protected closedRooms: string = '';
   protected repeatOption: RepeatOptions = RepeatOptions.no;
   protected repeatTimes = 0;
   protected showRepeats = '';
@@ -62,26 +66,26 @@ export class BookComponent implements OnInit {
   selected = model<Date | null>(null);
 
   hourSelected(time: string) {
-    const freeRoom = this.specialTimes.filter(val => val.time === time)
+    const freeRoom = this.specialTimes.filter((val) => val.time === time);
     if (freeRoom.length < 1) {
-      this.disableSelectRoom = false
-      this.room = Rooms.any
-      this.closedRooms = ''
+      this.disableSelectRoom = false;
+      this.room = Rooms.any;
+      this.closedRooms = '';
     }
     if (freeRoom.length === 1) {
-      this.room = freeRoom[0].room === 'red' ? Rooms.yellow : Rooms.red
-      this.closedRooms = `The ${freeRoom[0].room} room is already booked`
+      this.room = freeRoom[0].room === 'red' ? Rooms.yellow : Rooms.red;
+      this.closedRooms = `The ${freeRoom[0].room} room is already booked`;
     }
     this.selectedHours = time;
     if (freeRoom.length > 1) {
       this.disableSelectRoom = true;
       this.room = Rooms.any;
-      this.disableBookIt = true
+      this.disableBookIt = true;
       this.yourBookIs = 'Please select date and time';
-      this.closedRooms = 'All rooms are already booked'
-      return
+      this.closedRooms = 'All rooms are already booked';
+      return;
     }
-    this.disableBookIt = false
+    this.disableBookIt = false;
     this.dateChanged();
   }
 
@@ -94,7 +98,7 @@ export class BookComponent implements OnInit {
       this.udateClosedTimes(d);
     }
     if (pick && this.selectedHours) {
-      this.disableBookIt = false
+      this.disableBookIt = false;
       const d = new Date(pick);
       const year = d.getFullYear();
       const month = d.getMonth();
@@ -128,7 +132,7 @@ export class BookComponent implements OnInit {
           for (const items of val) {
             newArr.push({
               time: items.time,
-              room: items.room
+              room: items.room,
             });
             this.specialTimes = newArr;
           }
@@ -140,6 +144,7 @@ export class BookComponent implements OnInit {
   timeRepeat(val: number) {
     this.repeatTimes = val;
     this.checkRepeats();
+    // check for other days
   }
 
   repeats(val: RepeatOptions) {
@@ -177,5 +182,4 @@ export class BookComponent implements OnInit {
   ngOnInit(): void {
     this.teamName = this.teamNameService.getName();
   }
-
 }

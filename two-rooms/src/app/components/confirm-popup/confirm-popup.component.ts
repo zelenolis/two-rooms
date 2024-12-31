@@ -1,15 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-confirm-popup',
   imports: [MatDialogModule, MatButtonModule, MatDialogTitle],
   templateUrl: './confirm-popup.component.html',
-  styleUrl: './confirm-popup.component.scss'
+  styleUrl: './confirm-popup.component.scss',
 })
 export class ConfirmPopupComponent {
-  private matDialogRef = inject(MatDialogRef)
+  private matDialogRef = inject(MatDialogRef);
 
   onConfirm() {
     this.matDialogRef.close(true);
@@ -18,5 +22,4 @@ export class ConfirmPopupComponent {
   onCancel() {
     this.matDialogRef.close(false);
   }
-
 }
