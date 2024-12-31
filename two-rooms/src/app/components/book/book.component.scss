@@ -23,11 +23,19 @@
     background-color: var(--main1);
     font-weight: 600;
   }
-}
 
-.book_button {
-  border-radius: 5px;
-  cursor: pointer;
+  &:disabled {
+    opacity: 50%;
+    color: var(--white);
+    border-color: var(--white);
+
+    &:hover{
+      cursor: auto;
+      color: var(--white);
+      background-color: var(--background);
+      font-weight: 400;
+    }
+  }
 }
 
 .book_option {

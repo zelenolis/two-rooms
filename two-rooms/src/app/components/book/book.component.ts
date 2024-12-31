@@ -3,6 +3,7 @@ import {
   Component,
   inject,
   model,
+  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +20,7 @@ import { Store } from '@ngrx/store';
 import { selectByDate } from '../../store/selectors';
 import { map, take } from 'rxjs';
 import { Router } from '@angular/router';
+import { TeamNameService } from '../../services/team-name.service';
 
 @Component({
   selector: 'app-book',
@@ -37,11 +39,13 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BookComponent {
+export class BookComponent implements OnInit {
   private readonly bookThisService = inject(BookThisService);
+  private readonly teamNameService = inject(TeamNameService);
   private readonly store = inject(Store);
   private readonly router = inject(Router);
   private bookDate: Date | undefined;
+  private teamName = '';
 
   protected repeates: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   protected yourBookIs = 'Please select date and time';
@@ -53,6 +57,7 @@ export class BookComponent {
   protected specialTimes: BookTimeRoom[] = [];
   protected selectedHours: string = '';
   protected disableSelectRoom: boolean = false;
+  protected disableBookIt: boolean = true;
 
   selected = model<Date | null>(null);
 
@@ -64,7 +69,6 @@ export class BookComponent {
       this.closedRooms = ''
     }
     if (freeRoom.length === 1) {
-      this.disableSelectRoom = true;
       this.room = freeRoom[0].room === 'red' ? Rooms.yellow : Rooms.red
       this.closedRooms = `The ${freeRoom[0].room} room is already booked`
     }
@@ -72,10 +76,12 @@ export class BookComponent {
     if (freeRoom.length > 1) {
       this.disableSelectRoom = true;
       this.room = Rooms.any;
+      this.disableBookIt = true
       this.yourBookIs = 'Please select date and time';
       this.closedRooms = 'All rooms are already booked'
       return
     }
+    this.disableBookIt = false
     this.dateChanged();
   }
 
@@ -88,6 +94,7 @@ export class BookComponent {
       this.udateClosedTimes(d);
     }
     if (pick && this.selectedHours) {
+      this.disableBookIt = false
       const d = new Date(pick);
       const year = d.getFullYear();
       const month = d.getMonth();
@@ -166,4 +173,9 @@ export class BookComponent {
   onBack() {
     this.router.navigate(['']);
   }
+
+  ngOnInit(): void {
+    this.teamName = this.teamNameService.getName();
+  }
+
 }
