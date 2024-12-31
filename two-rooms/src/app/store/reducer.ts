@@ -29,6 +29,6 @@ export const bookReducer = createReducer(
   })),
   on(delBookAction, (state: BookList, { delId }) => ({
     ...state,
-    items: state.items.filter(item => item.objectId !== delId),
+    items: state.items.filter((item) => item.objectId !== delId),
   })),
 );

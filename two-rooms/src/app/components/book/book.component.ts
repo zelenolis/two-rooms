@@ -3,6 +3,7 @@ import {
   Component,
   inject,
   model,
+  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,12 +14,17 @@ import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { NgFor } from '@angular/common';
 import { BookThisService } from '../../services/book-this.service';
-import { Rooms, RepeatOptions } from '../../interfaces/interfaces';
+import {
+  Rooms,
+  RepeatOptions,
+  BookTimeRoom,
+} from '../../interfaces/interfaces';
 import { TimePickerComponent } from '../time-picker/time-picker.component';
 import { Store } from '@ngrx/store';
 import { selectByDate } from '../../store/selectors';
 import { map, take } from 'rxjs';
 import { Router } from '@angular/router';
+import { TeamNameService } from '../../services/team-name.service';
 
 @Component({
   selector: 'app-book',
@@ -37,40 +43,62 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BookComponent {
+export class BookComponent implements OnInit {
   private readonly bookThisService = inject(BookThisService);
+  private readonly teamNameService = inject(TeamNameService);
   private readonly store = inject(Store);
   private readonly router = inject(Router);
   private bookDate: Date | undefined;
+  private teamName = '';
 
   protected repeates: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   protected yourBookIs = 'Please select date and time';
+  protected closedRooms: string = '';
   protected repeatOption: RepeatOptions = RepeatOptions.no;
   protected repeatTimes = 0;
   protected showRepeats = '';
   protected room: Rooms = Rooms.any;
-  protected specialTimes: string[] = [];
+  protected specialTimes: BookTimeRoom[] = [];
   protected selectedHours: string = '';
+  protected disableSelectRoom: boolean = false;
+  protected disableBookIt: boolean = true;
 
   selected = model<Date | null>(null);
 
   hourSelected(time: string) {
-    this.selectedHours = time;
-    if (!time) {
-      this.yourBookIs = 'Please select date and time';
+    const freeRoom = this.specialTimes.filter((val) => val.time === time);
+    if (freeRoom.length < 1) {
+      this.disableSelectRoom = false;
+      this.room = Rooms.any;
+      this.closedRooms = '';
     }
+    if (freeRoom.length === 1) {
+      this.room = freeRoom[0].room === 'red' ? Rooms.yellow : Rooms.red;
+      this.closedRooms = `The ${freeRoom[0].room} room is already booked`;
+    }
+    this.selectedHours = time;
+    if (freeRoom.length > 1) {
+      this.disableSelectRoom = true;
+      this.room = Rooms.any;
+      this.disableBookIt = true;
+      this.yourBookIs = 'Please select date and time';
+      this.closedRooms = 'All rooms are already booked';
+      return;
+    }
+    this.disableBookIt = false;
     this.dateChanged();
   }
 
   dateChanged() {
     const pick = this.selected();
-    const newArr: string[] = [];
+    const newArr: BookTimeRoom[] = [];
     this.specialTimes = newArr;
     if (pick) {
       const d = new Date(pick);
       this.udateClosedTimes(d);
     }
     if (pick && this.selectedHours) {
+      this.disableBookIt = false;
       const d = new Date(pick);
       const year = d.getFullYear();
       const month = d.getMonth();
@@ -100,9 +128,12 @@ export class BookComponent {
       .pipe(
         take(1),
         map((val) => {
-          const newArr = [];
+          const newArr: BookTimeRoom[] = [];
           for (const items of val) {
-            newArr.push(items.time);
+            newArr.push({
+              time: items.time,
+              room: items.room,
+            });
             this.specialTimes = newArr;
           }
         }),
@@ -110,13 +141,10 @@ export class BookComponent {
       .subscribe();
   }
 
-  rooms(val: Rooms) {
-    this.room = val;
-  }
-
   timeRepeat(val: number) {
     this.repeatTimes = val;
     this.checkRepeats();
+    // check for other days
   }
 
   repeats(val: RepeatOptions) {
@@ -149,5 +177,9 @@ export class BookComponent {
 
   onBack() {
     this.router.navigate(['']);
+  }
+
+  ngOnInit(): void {
+    this.teamName = this.teamNameService.getName();
   }
 }

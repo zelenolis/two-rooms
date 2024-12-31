@@ -39,3 +39,8 @@ export enum RepeatOptions {
   day = 'day',
   week = 'week',
 }
+
+export interface BookTimeRoom {
+  time: string;
+  room: string;
+}
