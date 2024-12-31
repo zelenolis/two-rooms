@@ -1,12 +1,17 @@
-import { createReducer, on } from '@ngrx/store'
-import { BookList } from '../interfaces/interfaces'
-import { addBookAction, addAllBooksAction, refreshStateAction } from './actions'
+import { createReducer, on } from '@ngrx/store';
+import { BookList } from '../interfaces/interfaces';
+import {
+  addBookAction,
+  addAllBooksAction,
+  refreshStateAction,
+  delBookAction,
+} from './actions';
 
-export const STORE_REDUCER_NODE = 'books'
+export const STORE_REDUCER_NODE = 'books';
 
 const initialState: BookList = {
   items: [],
-}
+};
 
 export const bookReducer = createReducer(
   initialState,
@@ -22,4 +27,8 @@ export const bookReducer = createReducer(
     ...state,
     items: [...newBooks],
   })),
-)
+  on(delBookAction, (state: BookList, { delId }) => ({
+    ...state,
+    items: state.items.filter(item => item.objectId !== delId),
+  })),
+);

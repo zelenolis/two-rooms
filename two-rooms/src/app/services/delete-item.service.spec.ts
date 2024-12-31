@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LoginCheckService } from './login-check.service';
+import { DeleteItemService } from './delete-item.service';
 
-describe('LoginCheckService', () => {
-  let service: LoginCheckService;
+describe('DeleteItemService', () => {
+  let service: DeleteItemService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(LoginCheckService);
+    service = TestBed.inject(DeleteItemService);
   });
 
   it('should be created', () => {

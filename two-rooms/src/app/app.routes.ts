@@ -1,6 +1,6 @@
-import { Routes } from '@angular/router'
-import { isloggedGuard } from './guards/islogged.guard'
-import { notloggedGuard } from './guards/notlogged.guard'
+import { Routes } from '@angular/router';
+import { isloggedGuard } from './guards/islogged.guard';
+import { notloggedGuard } from './guards/notlogged.guard';
 
 export const routes: Routes = [
   {
@@ -43,4 +43,4 @@ export const routes: Routes = [
       ),
     canActivate: [isloggedGuard],
   },
-]
+];
