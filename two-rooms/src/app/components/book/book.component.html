@@ -13,12 +13,13 @@
   <div class="booking_room">
     <mat-form-field>
       <mat-label>Select Room</mat-label>
-      <mat-select (selectionChange)="rooms($event.value)">
+      <mat-select [(value)]="room" [disabled]="disableSelectRoom">
         <mat-option value="any">Any</mat-option>
         <mat-option value="red">Red room</mat-option>
         <mat-option value="yellow">Yellow room</mat-option>
       </mat-select>
     </mat-form-field>
+    <p>{{ closedRooms }}</p>
   </div>
 </div>
 <div class="book_option">

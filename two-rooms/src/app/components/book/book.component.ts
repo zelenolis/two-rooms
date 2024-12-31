@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { NgFor } from '@angular/common';
 import { BookThisService } from '../../services/book-this.service';
-import { Rooms, RepeatOptions } from '../../interfaces/interfaces';
+import { Rooms, RepeatOptions, BookTimeRoom } from '../../interfaces/interfaces';
 import { TimePickerComponent } from '../time-picker/time-picker.component';
 import { Store } from '@ngrx/store';
 import { selectByDate } from '../../store/selectors';
@@ -45,26 +45,43 @@ export class BookComponent {
 
   protected repeates: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   protected yourBookIs = 'Please select date and time';
+  protected closedRooms: string = ''
   protected repeatOption: RepeatOptions = RepeatOptions.no;
   protected repeatTimes = 0;
   protected showRepeats = '';
   protected room: Rooms = Rooms.any;
-  protected specialTimes: string[] = [];
+  protected specialTimes: BookTimeRoom[] = [];
   protected selectedHours: string = '';
+  protected disableSelectRoom: boolean = false;
 
   selected = model<Date | null>(null);
 
   hourSelected(time: string) {
+    const freeRoom = this.specialTimes.filter(val => val.time === time)
+    if (freeRoom.length < 1) {
+      this.disableSelectRoom = false
+      this.room = Rooms.any
+      this.closedRooms = ''
+    }
+    if (freeRoom.length === 1) {
+      this.disableSelectRoom = true;
+      this.room = freeRoom[0].room === 'red' ? Rooms.yellow : Rooms.red
+      this.closedRooms = `The ${freeRoom[0].room} room is already booked`
+    }
     this.selectedHours = time;
-    if (!time) {
+    if (freeRoom.length > 1) {
+      this.disableSelectRoom = true;
+      this.room = Rooms.any;
       this.yourBookIs = 'Please select date and time';
+      this.closedRooms = 'All rooms are already booked'
+      return
     }
     this.dateChanged();
   }
 
   dateChanged() {
     const pick = this.selected();
-    const newArr: string[] = [];
+    const newArr: BookTimeRoom[] = [];
     this.specialTimes = newArr;
     if (pick) {
       const d = new Date(pick);
@@ -100,18 +117,17 @@ export class BookComponent {
       .pipe(
         take(1),
         map((val) => {
-          const newArr = [];
+          const newArr: BookTimeRoom[] = [];
           for (const items of val) {
-            newArr.push(items.time);
+            newArr.push({
+              time: items.time,
+              room: items.room
+            });
             this.specialTimes = newArr;
           }
         }),
       )
       .subscribe();
-  }
-
-  rooms(val: Rooms) {
-    this.room = val;
   }
 
   timeRepeat(val: number) {

@@ -9,6 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
+import { BookTimeRoom } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-time-picker',
@@ -18,7 +19,7 @@ import { ChangeDetectorRef } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimePickerComponent implements OnChanges {
-  @Input() specialTimes: string[] = [];
+  @Input() specialTimes: BookTimeRoom[] = [];
   @Output() timeSelected = new EventEmitter<string>();
 
   protected hours: string[] = [];
@@ -41,7 +42,8 @@ export class TimePickerComponent implements OnChanges {
   }
 
   isSpecialTime(time: string): boolean {
-    return this.specialTimes.includes(time);
+    const booked = this.specialTimes.filter(val => val.time === time)
+    if (booked.length) { return true } else { return false }
   }
 
   isSelected(time: string) {
@@ -54,11 +56,15 @@ export class TimePickerComponent implements OnChanges {
 
   selectTime(hour: string) {
     this.selectedHour = hour;
-    const closed = this.specialTimes.some((val) => val === hour);
+    this.timeSelected.emit(hour);
+    /*
+    const closed = this.specialTimes.some((val) => val.time === hour);
     if (closed) {
       this.timeSelected.emit(undefined);
       return;
     }
     this.timeSelected.emit(hour);
+        */
   }
+
 }
