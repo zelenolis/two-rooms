@@ -64,10 +64,9 @@ export class CheckRepeatDatesService {
 
   findEquals(arr: Booking[]): boolean {
     const seen = new Map();
-    for (let obj of arr) {
+    for (const obj of arr) {
       const key = `${obj.date}-${obj.time}`;
       if (seen.has(key)) {
-        console.log('find ', [seen.get(key), obj]);
         return true;
       }
       seen.set(key, obj);
