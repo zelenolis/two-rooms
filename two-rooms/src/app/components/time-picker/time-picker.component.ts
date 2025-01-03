@@ -43,11 +43,11 @@ export class TimePickerComponent implements OnChanges {
 
   isSpecialTime(time: string): boolean {
     const booked = this.specialTimes.filter((val) => val.time === time);
-    return booked.length ? true : false
+    return booked.length ? true : false;
   }
 
   isSelected(time: string): boolean {
-    return time === this.selectedHour ? true : false
+    return time === this.selectedHour ? true : false;
   }
 
   selectTime(hour: string): void {

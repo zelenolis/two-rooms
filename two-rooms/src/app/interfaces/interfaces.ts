@@ -8,7 +8,7 @@ export interface Booking {
   time: string;
   date: string;
   duration: string;
-  room: string;
+  room: Rooms;
 }
 
 export interface SendBooking {
@@ -16,7 +16,7 @@ export interface SendBooking {
   time: string;
   date: string;
   duration: string;
-  room: string;
+  room: Rooms;
 }
 
 export interface UserResponce {

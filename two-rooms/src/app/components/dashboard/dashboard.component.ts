@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
       const date = new Date(pick);
       this.myDate = date;
       const formatDate = date.toISOString();
-      this.showBooks = this.specialDates.some((val) => val === formatDate)
+      this.showBooks = this.specialDates.some((val) => val === formatDate);
     }
   }
 

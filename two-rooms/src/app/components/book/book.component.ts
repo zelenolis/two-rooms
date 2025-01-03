@@ -104,15 +104,7 @@ export class BookComponent implements OnInit {
       const month = d.getMonth();
       const day = d.getDate();
       this.yourBookIs = `Your book is: ${this.selectedHours}, ${day}.${month}.${year}`;
-      this.bookDate = new Date(
-        year,
-        month,
-        day,
-        +this.selectedHours.split(':')[0],
-        +this.selectedHours.split(':')[1],
-        0,
-        0,
-      );
+      this.bookDate = new Date(year, month, day, 12, 0, 0);
     }
   }
 
@@ -165,8 +157,9 @@ export class BookComponent implements OnInit {
   }
 
   onBook(): void {
-    if (this.bookDate) {
+    if (this.bookDate && this.selectedHours) {
       this.bookThisService.checkData(
+        this.selectedHours,
         this.bookDate,
         this.repeatOption,
         this.repeatTimes,

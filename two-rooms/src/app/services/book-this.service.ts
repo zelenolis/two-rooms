@@ -1,17 +1,18 @@
 import { inject, Injectable } from '@angular/core';
 import { SendBooking, Rooms, RepeatOptions } from '../interfaces/interfaces';
 import { TeamNameService } from './team-name.service';
-import { PushNewBookService } from './push-new-book.service';
+import { CheckRepeatDatesService } from './check-repeat-dates.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookThisService {
   private readonly teamNameService = inject(TeamNameService);
-  private readonly pushNewBookService = inject(PushNewBookService);
+  private readonly checkRepeatDatesService = inject(CheckRepeatDatesService);
   private bookArray: SendBooking[] = [];
 
   checkData(
+    hours: string,
     date: Date,
     repeatOption: RepeatOptions,
     repeatTimes: number,
@@ -19,11 +20,7 @@ export class BookThisService {
   ): void {
     const teamName = this.teamNameService.getName();
     const duration = 1;
-    const time =
-      date.getHours().toString().padStart(2, '0') +
-      ':' +
-      date.getMinutes().toString().padStart(2, '0');
-    let bookedRoom = Rooms.red;
+    let bookedRoom = Rooms.yellow;
     if (repeatOption !== RepeatOptions.no && repeatTimes === 0) {
       repeatTimes = 1;
     }
@@ -34,20 +31,20 @@ export class BookThisService {
       case RepeatOptions.no:
         this.pushData(
           teamName,
-          time,
+          hours,
           date.toISOString(),
           duration.toString(),
-          bookedRoom,
+          room,
         );
         break;
       case RepeatOptions.day:
         for (let i = 0; i < repeatTimes; i++) {
           this.pushData(
             teamName,
-            time,
+            hours,
             date.toISOString(),
             duration.toString(),
-            bookedRoom,
+            room,
           );
           date.setDate(date.getDate() + 1);
         }
@@ -56,10 +53,10 @@ export class BookThisService {
         for (let i = 0; i < repeatTimes; i++) {
           this.pushData(
             teamName,
-            time,
+            hours,
             date.toISOString(),
             duration.toString(),
-            bookedRoom,
+            room,
           );
           date.setDate(date.getDate() + 7);
         }
@@ -68,7 +65,7 @@ export class BookThisService {
         break;
     }
     if (this.bookArray.length > 0) {
-      this.pushNewBookService.pushRequest(this.bookArray);
+      this.checkRepeatDatesService.checkFreeRooms(room, this.bookArray);
       this.bookArray = [];
     }
   }
@@ -78,7 +75,7 @@ export class BookThisService {
     time: string,
     date: string,
     duration: string,
-    room: string,
+    room: Rooms,
   ): void {
     const item: SendBooking = {
       team: team,

@@ -21,7 +21,7 @@ export class LoginComponent {
 
     this.loginService.loginChecks(form.value);
   }
-  
+
   onClick(): void {
     this.router.navigate(['/registration']);
   }
