@@ -66,6 +66,7 @@ export class BookComponent implements OnInit {
   selected = model<Date | null>(null);
 
   hourSelected(time: string): void {
+    const pick = this.selected();
     const freeRoom = this.specialTimes.filter((val) => val.time === time);
     if (freeRoom.length < 1) {
       this.disableSelectRoom = false;
@@ -85,26 +86,28 @@ export class BookComponent implements OnInit {
       this.closedRooms = 'All rooms are already booked';
       return;
     }
-    this.disableBookIt = false;
-    this.dateChanged();
-  }
-
-  dateChanged(): void {
-    const pick = this.selected();
-    const newArr: BookTimeRoom[] = [];
-    this.specialTimes = newArr;
-    if (pick) {
-      const d = new Date(pick);
-      this.udateClosedTimes(d);
-    }
+    //this.disableBookIt = false;
     if (pick && this.selectedHours) {
       this.disableBookIt = false;
       const d = new Date(pick);
       const year = d.getFullYear();
       const month = d.getMonth();
       const day = d.getDate();
-      this.yourBookIs = `Your book is: ${this.selectedHours}, ${day}.${month}.${year}`;
+      this.yourBookIs = `Your book is: ${this.selectedHours}, ${day}.${month + 1}.${year}`;
       this.bookDate = new Date(year, month, day, 12, 0, 0);
+    }
+  }
+
+  dateChanged(): void {
+    this.selectedHours = '';
+    this.disableBookIt = true;
+    this.yourBookIs = 'Please select date and time';
+    const pick = this.selected();
+    const newArr: BookTimeRoom[] = [];
+    this.specialTimes = newArr;
+    if (pick) {
+      const d = new Date(pick);
+      this.udateClosedTimes(d);
     }
   }
 
@@ -136,7 +139,6 @@ export class BookComponent implements OnInit {
   timeRepeat(val: number): void {
     this.repeatTimes = val;
     this.checkRepeats();
-    // check for other days
   }
 
   repeats(val: RepeatOptions): void {
@@ -165,6 +167,11 @@ export class BookComponent implements OnInit {
         this.repeatTimes,
         this.room,
       );
+      this.selectedHours = '';
+      this.bookDate = undefined;
+      this.room = Rooms.any;
+      this.repeatOption = RepeatOptions.no;
+      this.repeatTimes = 0;
     }
   }
 

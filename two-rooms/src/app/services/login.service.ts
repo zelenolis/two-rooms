@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { switchMap, takeWhile, tap } from 'rxjs';
+import { takeWhile, tap } from 'rxjs';
 import { GetHttpService } from './get-http.service';
 import { LoginCheckService } from './login-check.service';
 import { LoginForm, UserResponce } from '../interfaces/interfaces';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { refreshStateAction, StoreActionsType } from '../store/actions';
+import { StoreActionsType } from '../store/actions';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,6 @@ export class LoginService {
   private readonly store = inject(Store);
 
   private readonly logUrl = 'https://parseapi.back4app.com/classes/team';
-  private readonly storeUrl = 'https://parseapi.back4app.com/classes/booking';
 
   loginChecks(loginForm: LoginForm): void {
     let isLogged = true;
@@ -33,7 +32,7 @@ export class LoginService {
         }),
         takeWhile(() => isLogged),
         tap(() => {
-          this.store.dispatch({type: StoreActionsType.loadBooks});
+          this.store.dispatch({ type: StoreActionsType.loadBooks });
           this.router.navigate(['']);
         }),
       )

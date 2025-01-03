@@ -3,6 +3,7 @@ import { SendBooking, Rooms, Booking } from '../interfaces/interfaces';
 import { Store } from '@ngrx/store';
 import { selectAllDataTime } from '../store/selectors';
 import { PushNewBookService } from './push-new-book.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,9 @@ import { PushNewBookService } from './push-new-book.service';
 export class CheckRepeatDatesService {
   private readonly store = inject(Store);
   private readonly pushNewBookService = inject(PushNewBookService);
+  private readonly matSnackBar = inject(MatSnackBar);
 
-  checkFreeRooms(room: Rooms, bookArray: SendBooking[]) {
+  checkFreeRooms(bookArray: SendBooking[]): void {
     const tempArray: { date: string; time: string }[] = [];
     for (let i = 0; i < bookArray.length; i++) {
       tempArray.push({ date: bookArray[i].date, time: bookArray[i].time });
@@ -19,23 +21,56 @@ export class CheckRepeatDatesService {
 
     this.store.select(selectAllDataTime(tempArray)).subscribe({
       next: (val: Booking[]) => {
-        console.log(val);
-        if (val.length < 1) {
-          console.log('free');
+        if (this.findEquals(val)) {
+          this.matSnackBar.open('Some dates are already booked', 'OK', {
+            duration: 3000,
+          });
           return;
         }
-        if (val.length > 1) {
-          console.log('all rooms booked');
-          return;
-        }
-        const newRoom = val[0].room === Rooms.red ? Rooms.yellow : Rooms.red;
         for (let i = 0; i < bookArray.length; i++) {
-          bookArray[i].room = newRoom;
+          const currentDate = bookArray[i].date.split('T')[0];
+          const currentTime = bookArray[i].time;
+          const found = val.filter(
+            (item) =>
+              item.date.split('T')[0] === currentDate &&
+              item.time === currentTime,
+          );
+          if (found.length > 0) {
+            if (bookArray[i].room === Rooms.any) {
+              bookArray[i].room =
+                found[0].room === Rooms.red ? Rooms.yellow : Rooms.red;
+            }
+            if (bookArray[i].room === found[0].room) {
+              this.matSnackBar.open(
+                'Some dates in this room has already booked',
+                'OK',
+                {
+                  duration: 3000,
+                },
+              );
+              return;
+            }
+          }
+          if (bookArray[i].room === Rooms.any) {
+            console.log('room assigned');
+            bookArray[i].room = Rooms.red;
+          }
         }
+        this.pushNewBookService.pushRequest(bookArray);
       },
     });
-    console.log('bookArray: ', bookArray);
-    this.pushNewBookService.pushRequest(bookArray);
     return;
+  }
+
+  findEquals(arr: Booking[]): boolean {
+    const seen = new Map();
+    for (const obj of arr) {
+      const key = `${obj.date}-${obj.time}`;
+      if (seen.has(key)) {
+        return true;
+      }
+      seen.set(key, obj);
+    }
+    return false;
   }
 }

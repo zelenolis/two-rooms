@@ -28,6 +28,6 @@ export const appConfig: ApplicationConfig = {
       logOnly: !isDevMode(),
     }),
     provideHttpClient(withInterceptors([requestsInterceptor])),
-    provideEffects([BookingEffects])
+    provideEffects([BookingEffects]),
   ],
 };

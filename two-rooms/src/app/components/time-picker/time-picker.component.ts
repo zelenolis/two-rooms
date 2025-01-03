@@ -32,6 +32,7 @@ export class TimePickerComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.selectedHour = '';
     if (changes['specialTimes']) {
       this.ref.markForCheck();
     }
