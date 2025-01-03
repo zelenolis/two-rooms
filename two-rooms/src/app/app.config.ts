@@ -13,6 +13,8 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { requestsInterceptor } from './interceptors/requests.interceptor';
 import { bookReducer } from './store/reducer';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { BookingEffects } from './store/load.effetc';
+import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,5 +28,6 @@ export const appConfig: ApplicationConfig = {
       logOnly: !isDevMode(),
     }),
     provideHttpClient(withInterceptors([requestsInterceptor])),
+    provideEffects([BookingEffects])
   ],
 };

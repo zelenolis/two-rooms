@@ -3,7 +3,7 @@ import { GetHttpService } from './get-http.service';
 import { take, tap } from 'rxjs';
 import { UserResponce } from '../interfaces/interfaces';
 import { Store } from '@ngrx/store';
-import { refreshStateAction } from '../store/actions';
+import { refreshStateAction, StoreActionsType } from '../store/actions';
 
 @Injectable({
   providedIn: 'root',
@@ -24,25 +24,7 @@ export class TeamNameService {
     const localName = localStorage.getItem('teamName');
     if (!this.teamName && localName) {
       this.teamName = localName;
-      this.getHttpService
-        .getRequest(this.storeUrl)
-        .pipe(
-          take(1),
-          tap((data: UserResponce) => {
-            const transformData = data.results.map((item) => ({
-              objectId: item.objectId,
-              team: item.team,
-              time: item.time,
-              date: item.date,
-              duration: item.duration,
-              room: item.room,
-            }));
-            this.store.dispatch(
-              refreshStateAction({ newBooks: transformData }),
-            );
-          }),
-        )
-        .subscribe();
+      this.store.dispatch({type: StoreActionsType.loadBooks});
     }
     return this.teamName;
   }
