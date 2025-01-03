@@ -5,7 +5,7 @@ import { LoginCheckService } from './login-check.service';
 import { LoginForm, UserResponce } from '../interfaces/interfaces';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { refreshStateAction } from '../store/actions';
+import { refreshStateAction, StoreActionsType } from '../store/actions';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class LoginService {
   private readonly logUrl = 'https://parseapi.back4app.com/classes/team';
   private readonly storeUrl = 'https://parseapi.back4app.com/classes/booking';
 
-  loginChecks(loginForm: LoginForm) {
+  loginChecks(loginForm: LoginForm): void {
     let isLogged = true;
 
     const getLogged = this.getHttpService.getRequest(this.logUrl);
@@ -32,17 +32,8 @@ export class LoginService {
           }
         }),
         takeWhile(() => isLogged),
-        switchMap(() => this.getHttpService.getRequest(this.storeUrl)),
-        tap((data: UserResponce) => {
-          const transformData = data.results.map((item) => ({
-            objectId: item.objectId,
-            team: item.team,
-            time: item.time,
-            date: item.date,
-            duration: item.duration,
-            room: item.room,
-          }));
-          this.store.dispatch(refreshStateAction({ newBooks: transformData }));
+        tap(() => {
+          this.store.dispatch({type: StoreActionsType.loadBooks});
           this.router.navigate(['']);
         }),
       )

@@ -4,7 +4,7 @@ import {
   inject,
   Input,
 } from '@angular/core';
-import { Booking } from '../../interfaces/interfaces';
+import { Booking, Rooms } from '../../interfaces/interfaces';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmPopupComponent } from '../confirm-popup/confirm-popup.component';
 import { DeleteItemService } from '../../services/delete-item.service';
@@ -27,10 +27,10 @@ export class ReservationComponent {
     time: '',
     date: '',
     duration: '',
-    room: '',
+    room: Rooms.any,
   };
 
-  onDelete() {
+  onDelete(): void {
     const buttonElement = document.activeElement as HTMLElement;
     buttonElement.blur();
     const dialogRef = this.matDialog.open(ConfirmPopupComponent);

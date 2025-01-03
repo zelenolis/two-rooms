@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Booking } from '../interfaces/interfaces';
 
 export enum StoreActionsType {
+  loadBooks = '[LOAD] load books',
   addBook = '[ADD] add a booking',
   addAllBooks = '[ADD] add many bookings',
   refreshState = '[ADD] refresh all bookings',

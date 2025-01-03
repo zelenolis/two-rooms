@@ -31,7 +31,7 @@ export class TimePickerComponent implements OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['specialTimes']) {
       this.ref.markForCheck();
     }
@@ -43,31 +43,15 @@ export class TimePickerComponent implements OnChanges {
 
   isSpecialTime(time: string): boolean {
     const booked = this.specialTimes.filter((val) => val.time === time);
-    if (booked.length) {
-      return true;
-    } else {
-      return false;
-    }
+    return booked.length ? true : false;
   }
 
-  isSelected(time: string) {
-    if (time === this.selectedHour) {
-      return true;
-    } else {
-      return false;
-    }
+  isSelected(time: string): boolean {
+    return time === this.selectedHour ? true : false;
   }
 
-  selectTime(hour: string) {
+  selectTime(hour: string): void {
     this.selectedHour = hour;
     this.timeSelected.emit(hour);
-    /*
-    const closed = this.specialTimes.some((val) => val.time === hour);
-    if (closed) {
-      this.timeSelected.emit(undefined);
-      return;
-    }
-    this.timeSelected.emit(hour);
-        */
   }
 }

@@ -16,3 +16,14 @@ export const selectByDate = (date: string) =>
       return check === newVal;
     }),
   );
+
+export const selectAllDataTime = (match: { date: string; time: string }[]) =>
+  createSelector(storeFeatureSelector, (state) =>
+    state.items.filter((item) => {
+      return match.some((pair) => {
+        const check = pair.date.split('T')[0];
+        const newVal = item.date.split('T')[0];
+        return check == newVal && item.time == pair.time;
+      });
+    }),
+  );

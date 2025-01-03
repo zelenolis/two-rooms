@@ -12,10 +12,10 @@ import { Router } from '@angular/router';
 export class RegistrationComponent {
   private readonly router = inject(Router);
 
-  onSubmit(form: any) {
+  onSubmit(form: any): void {
     console.log(form.value);
   }
-  onClick() {
+  onClick(): void {
     this.router.navigate(['/login']);
   }
 }

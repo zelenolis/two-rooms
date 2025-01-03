@@ -65,7 +65,7 @@ export class BookComponent implements OnInit {
 
   selected = model<Date | null>(null);
 
-  hourSelected(time: string) {
+  hourSelected(time: string): void {
     const freeRoom = this.specialTimes.filter((val) => val.time === time);
     if (freeRoom.length < 1) {
       this.disableSelectRoom = false;
@@ -89,7 +89,7 @@ export class BookComponent implements OnInit {
     this.dateChanged();
   }
 
-  dateChanged() {
+  dateChanged(): void {
     const pick = this.selected();
     const newArr: BookTimeRoom[] = [];
     this.specialTimes = newArr;
@@ -104,19 +104,11 @@ export class BookComponent implements OnInit {
       const month = d.getMonth();
       const day = d.getDate();
       this.yourBookIs = `Your book is: ${this.selectedHours}, ${day}.${month}.${year}`;
-      this.bookDate = new Date(
-        year,
-        month,
-        day,
-        +this.selectedHours.split(':')[0],
-        +this.selectedHours.split(':')[1],
-        0,
-        0,
-      );
+      this.bookDate = new Date(year, month, day, 12, 0, 0);
     }
   }
 
-  udateClosedTimes(date: Date) {
+  udateClosedTimes(date: Date): void {
     if (!date) {
       return;
     }
@@ -141,18 +133,18 @@ export class BookComponent implements OnInit {
       .subscribe();
   }
 
-  timeRepeat(val: number) {
+  timeRepeat(val: number): void {
     this.repeatTimes = val;
     this.checkRepeats();
     // check for other days
   }
 
-  repeats(val: RepeatOptions) {
+  repeats(val: RepeatOptions): void {
     this.repeatOption = val;
     this.checkRepeats();
   }
 
-  checkRepeats() {
+  checkRepeats(): void {
     if (
       this.repeatTimes > 0 &&
       this.repeatOption &&
@@ -164,9 +156,10 @@ export class BookComponent implements OnInit {
     }
   }
 
-  onBook() {
-    if (this.bookDate) {
+  onBook(): void {
+    if (this.bookDate && this.selectedHours) {
       this.bookThisService.checkData(
+        this.selectedHours,
         this.bookDate,
         this.repeatOption,
         this.repeatTimes,
@@ -175,7 +168,7 @@ export class BookComponent implements OnInit {
     }
   }
 
-  onBack() {
+  onBack(): void {
     this.router.navigate(['']);
   }
 
