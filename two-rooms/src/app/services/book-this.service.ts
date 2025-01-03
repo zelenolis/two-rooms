@@ -20,12 +20,8 @@ export class BookThisService {
   ): void {
     const teamName = this.teamNameService.getName();
     const duration = 1;
-    let bookedRoom = Rooms.yellow;
     if (repeatOption !== RepeatOptions.no && repeatTimes === 0) {
       repeatTimes = 1;
-    }
-    if (room !== Rooms.any) {
-      bookedRoom = room;
     }
     switch (repeatOption) {
       case RepeatOptions.no:
@@ -65,7 +61,7 @@ export class BookThisService {
         break;
     }
     if (this.bookArray.length > 0) {
-      this.checkRepeatDatesService.checkFreeRooms(room, this.bookArray);
+      this.checkRepeatDatesService.checkFreeRooms(this.bookArray);
       this.bookArray = [];
     }
   }

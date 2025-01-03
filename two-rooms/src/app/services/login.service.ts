@@ -33,7 +33,7 @@ export class LoginService {
         }),
         takeWhile(() => isLogged),
         tap(() => {
-          this.store.dispatch({type: StoreActionsType.loadBooks});
+          this.store.dispatch({ type: StoreActionsType.loadBooks });
           this.router.navigate(['']);
         }),
       )

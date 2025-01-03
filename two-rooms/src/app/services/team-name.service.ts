@@ -24,7 +24,7 @@ export class TeamNameService {
     const localName = localStorage.getItem('teamName');
     if (!this.teamName && localName) {
       this.teamName = localName;
-      this.store.dispatch({type: StoreActionsType.loadBooks});
+      this.store.dispatch({ type: StoreActionsType.loadBooks });
     }
     return this.teamName;
   }
